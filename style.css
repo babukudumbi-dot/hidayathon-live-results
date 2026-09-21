@@ -1,0 +1,130 @@
+/* Hidayathon 2.O Custom Styles & Animations */
+
+/* Marquee scrolling ticker */
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.animate-marquee {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* 3D Olympic Podium Styling */
+.podium-pedestal {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  position: relative;
+  border-top-left-radius: 1.25rem;
+  border-top-right-radius: 1.25rem;
+}
+
+.podium-pedestal:hover {
+  transform: translateY(-4px);
+}
+
+.podium-1 {
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.25) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 2px solid rgba(245, 158, 11, 0.8);
+  box-shadow: 0 0 35px rgba(245, 158, 11, 0.3);
+}
+
+.podium-2 {
+  background: linear-gradient(180deg, rgba(148, 163, 184, 0.2) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 2px solid rgba(148, 163, 184, 0.7);
+  box-shadow: 0 0 25px rgba(148, 163, 184, 0.2);
+}
+
+.podium-3 {
+  background: linear-gradient(180deg, rgba(217, 119, 6, 0.2) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 2px solid rgba(217, 119, 6, 0.7);
+  box-shadow: 0 0 25px rgba(217, 119, 6, 0.2);
+}
+
+/* House Glowing Cards */
+.house-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.house-card:hover {
+  transform: translateY(-4px);
+}
+
+.house-card-blue {
+  background: linear-gradient(145deg, rgba(30, 58, 138, 0.3) 0%, rgba(15, 23, 42, 0.9) 100%);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+.house-card-blue:hover {
+  border-color: rgba(59, 130, 246, 0.8);
+  box-shadow: 0 10px 30px -5px rgba(37, 99, 235, 0.3);
+}
+
+.house-card-green {
+  background: linear-gradient(145deg, rgba(20, 83, 45, 0.3) 0%, rgba(15, 23, 42, 0.9) 100%);
+  border-color: rgba(34, 197, 94, 0.4);
+}
+.house-card-green:hover {
+  border-color: rgba(34, 197, 94, 0.8);
+  box-shadow: 0 10px 30px -5px rgba(22, 163, 74, 0.3);
+}
+
+.house-card-red {
+  background: linear-gradient(145deg, rgba(127, 29, 29, 0.3) 0%, rgba(15, 23, 42, 0.9) 100%);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+.house-card-red:hover {
+  border-color: rgba(239, 68, 68, 0.8);
+  box-shadow: 0 10px 30px -5px rgba(220, 38, 38, 0.3);
+}
+
+.house-card-yellow {
+  background: linear-gradient(145deg, rgba(120, 53, 15, 0.3) 0%, rgba(15, 23, 42, 0.9) 100%);
+  border-color: rgba(234, 179, 8, 0.4);
+}
+.house-card-yellow:hover {
+  border-color: rgba(234, 179, 8, 0.8);
+  box-shadow: 0 10px 30px -5px rgba(217, 119, 6, 0.3);
+}
+
+/* Medal badges */
+.badge-gold {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #0f172a;
+}
+
+.badge-silver {
+  background: linear-gradient(135deg, #e2e8f0, #94a3b8);
+  color: #0f172a;
+}
+
+.badge-bronze {
+  background: linear-gradient(135deg, #f97316, #c2410c);
+  color: #ffffff;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
