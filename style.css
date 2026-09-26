@@ -1,6 +1,42 @@
-/* Hidayathon 2.O Custom Styles & Animations */
+/* Hidayathon 2.O Custom Styles & 3D Sports Arena Theme */
 
-/* Marquee scrolling ticker */
+/* ==========================================================================
+   1. GLOBAL DARK SPORTS ARENA THEME
+   ========================================================================== */
+:root {
+  --color-blue: #2563eb;
+  --color-blue-light: #60a5fa;
+  --color-blue-dark: #1e3a8a;
+
+  --color-green: #16a34a;
+  --color-green-light: #4ade80;
+  --color-green-dark: #14532d;
+
+  --color-red: #dc2626;
+  --color-red-light: #f87171;
+  --color-red-dark: #7f1d1d;
+
+  --color-yellow: #d97706;
+  --color-yellow-light: #fde047;
+  --color-yellow-dark: #78350f;
+}
+
+body {
+  background-color: #060911;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.12) 0px, transparent 45%),
+    radial-gradient(at 100% 0%, rgba(220, 38, 38, 0.10) 0px, transparent 45%),
+    radial-gradient(at 50% 30%, rgba(15, 23, 42, 0.8) 0px, transparent 100%),
+    radial-gradient(at 0% 80%, rgba(22, 163, 74, 0.08) 0px, transparent 45%),
+    radial-gradient(at 100% 80%, rgba(217, 119, 6, 0.10) 0px, transparent 45%);
+  background-attachment: fixed;
+  color: #f1f5f9;
+  font-family: 'Outfit', sans-serif;
+}
+
+/* ==========================================================================
+   2. SLOWER MARQUEE SCROLLING TICKER
+   ========================================================================== */
 @keyframes marquee {
   0% { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
@@ -9,120 +45,300 @@
 .animate-marquee {
   display: inline-block;
   white-space: nowrap;
-  animation: marquee 30s linear infinite;
+  animation: marquee 68s linear infinite;
+  will-change: transform;
 }
 
 .animate-marquee:hover {
   animation-play-state: paused;
 }
 
-/* 3D Olympic Podium Styling */
-.podium-pedestal {
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+/* ==========================================================================
+   3. 3D CUBE GRAPH COLUMNS FOR 4 HOUSES
+   ========================================================================== */
+.cube-graph-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
   position: relative;
-  border-top-left-radius: 1.25rem;
-  border-top-right-radius: 1.25rem;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  padding-bottom: 12px;
 }
 
-.podium-pedestal:hover {
-  transform: translateY(-4px);
+.cube-graph-card:hover {
+  transform: translateY(-8px);
 }
 
-.podium-1 {
-  background: linear-gradient(180deg, rgba(245, 158, 11, 0.25) 0%, rgba(15, 23, 42, 0.95) 100%);
-  border: 2px solid rgba(245, 158, 11, 0.8);
-  box-shadow: 0 0 35px rgba(245, 158, 11, 0.3);
-}
-
-.podium-2 {
-  background: linear-gradient(180deg, rgba(148, 163, 184, 0.2) 0%, rgba(15, 23, 42, 0.95) 100%);
-  border: 2px solid rgba(148, 163, 184, 0.7);
-  box-shadow: 0 0 25px rgba(148, 163, 184, 0.2);
-}
-
-.podium-3 {
-  background: linear-gradient(180deg, rgba(217, 119, 6, 0.2) 0%, rgba(15, 23, 42, 0.95) 100%);
-  border: 2px solid rgba(217, 119, 6, 0.7);
-  box-shadow: 0 0 25px rgba(217, 119, 6, 0.2);
-}
-
-/* House Glowing Cards */
-.house-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* 3D Isometric Cube Container */
+.cube-3d-wrap {
   position: relative;
+  width: 100%;
+  max-width: 175px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* The vertical 3D pillar */
+.cube-3d-pillar {
+  position: relative;
+  width: calc(100% - 14px);
+  margin-right: 14px;
+  transition: height 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* 3D Top Face */
+.cube-face-top {
+  position: absolute;
+  top: -14px;
+  left: 0;
+  width: 100%;
+  height: 14px;
+  transform: skewX(-45deg);
+  transform-origin: bottom left;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.5);
+  z-index: 2;
+}
+
+/* 3D Front Face */
+.cube-face-front {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 8px;
+  z-index: 3;
   overflow: hidden;
 }
 
+/* Subtle graph grid markings on front face */
+.cube-face-front::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.08) 0px,
+    rgba(255, 255, 255, 0.08) 1px,
+    transparent 1px,
+    transparent 28px
+  );
+  pointer-events: none;
+}
+
+/* 3D Side Face (Right) */
+.cube-face-side {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 14px;
+  height: 100%;
+  transform: skewY(-45deg);
+  transform-origin: top left;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 6px;
+  filter: brightness(0.68) saturate(1.15);
+  z-index: 1;
+}
+
+/* 3D Floor Shadow / Glow */
+.cube-floor-glow {
+  position: absolute;
+  bottom: -16px;
+  left: 5%;
+  width: 95%;
+  height: 20px;
+  border-radius: 50%;
+  filter: blur(10px);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cube-graph-card:hover .cube-floor-glow {
+  opacity: 1;
+  filter: blur(14px);
+}
+
+/* ==========================================================================
+   4. HOUSE-SPECIFIC 3D CUBE COLOR PALETTES
+   ========================================================================== */
+
+/* --- BLUE HOUSE CUBE --- */
+.cube-blue .cube-face-top {
+  background: linear-gradient(135deg, #93c5fd 0%, #3b82f6 100%);
+  border-top: 1px solid #bfdbfe;
+}
+.cube-blue .cube-face-front {
+  background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 45%, #0f172a 100%);
+  border-left: 2px solid #60a5fa;
+  border-bottom: 2px solid #1e3a8a;
+  box-shadow: 0 0 25px rgba(37, 99, 235, 0.35);
+}
+.cube-blue .cube-face-side {
+  background: linear-gradient(180deg, #1d4ed8 0%, #1e3a8a 50%, #030712 100%);
+  border-right: 1px solid #1e40af;
+}
+.cube-blue .cube-floor-glow {
+  background: radial-gradient(ellipse, rgba(37, 99, 235, 0.8) 0%, transparent 70%);
+}
+
+/* --- GREEN HOUSE CUBE --- */
+.cube-green .cube-face-top {
+  background: linear-gradient(135deg, #86efac 0%, #22c55e 100%);
+  border-top: 1px solid #bbf7d0;
+}
+.cube-green .cube-face-front {
+  background: linear-gradient(180deg, #16a34a 0%, #15803d 45%, #022c22 100%);
+  border-left: 2px solid #4ade80;
+  border-bottom: 2px solid #166534;
+  box-shadow: 0 0 25px rgba(22, 163, 74, 0.35);
+}
+.cube-green .cube-face-side {
+  background: linear-gradient(180deg, #15803d 0%, #166534 50%, #030712 100%);
+  border-right: 1px solid #166534;
+}
+.cube-green .cube-floor-glow {
+  background: radial-gradient(ellipse, rgba(22, 163, 74, 0.8) 0%, transparent 70%);
+}
+
+/* --- RED HOUSE CUBE --- */
+.cube-red .cube-face-top {
+  background: linear-gradient(135deg, #fca5a5 0%, #ef4444 100%);
+  border-top: 1px solid #fecaca;
+}
+.cube-red .cube-face-front {
+  background: linear-gradient(180deg, #dc2626 0%, #b91c1c 45%, #450a0a 100%);
+  border-left: 2px solid #f87171;
+  border-bottom: 2px solid #991b1b;
+  box-shadow: 0 0 25px rgba(220, 38, 38, 0.35);
+}
+.cube-red .cube-face-side {
+  background: linear-gradient(180deg, #b91c1c 0%, #991b1b 50%, #030712 100%);
+  border-right: 1px solid #991b1b;
+}
+.cube-red .cube-floor-glow {
+  background: radial-gradient(ellipse, rgba(220, 38, 38, 0.8) 0%, transparent 70%);
+}
+
+/* --- YELLOW HOUSE CUBE --- */
+.cube-yellow .cube-face-top {
+  background: linear-gradient(135deg, #fef08a 0%, #eab308 100%);
+  border-top: 1px solid #fef9c3;
+}
+.cube-yellow .cube-face-front {
+  background: linear-gradient(180deg, #d97706 0%, #b45309 45%, #451a03 100%);
+  border-left: 2px solid #fde047;
+  border-bottom: 2px solid #b45309;
+  box-shadow: 0 0 25px rgba(234, 179, 8, 0.35);
+}
+.cube-yellow .cube-face-side {
+  background: linear-gradient(180deg, #b45309 0%, #78350f 50%, #030712 100%);
+  border-right: 1px solid #b45309;
+}
+.cube-yellow .cube-floor-glow {
+  background: radial-gradient(ellipse, rgba(234, 179, 8, 0.8) 0%, transparent 70%);
+}
+
+/* ==========================================================================
+   5. HOUSE CARDS & GLASSMORPHIC PANELS
+   ========================================================================== */
+.house-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  background: rgba(12, 18, 32, 0.85);
+  border: 1px solid rgba(51, 65, 85, 0.6);
+  backdrop-filter: blur(12px);
+}
+
 .house-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
 }
 
 .house-card-blue {
-  background: linear-gradient(145deg, rgba(30, 58, 138, 0.3) 0%, rgba(15, 23, 42, 0.9) 100%);
+  background: linear-gradient(145deg, rgba(30, 58, 138, 0.35) 0%, rgba(9, 13, 24, 0.95) 100%);
   border-color: rgba(59, 130, 246, 0.4);
 }
 .house-card-blue:hover {
-  border-color: rgba(59, 130, 246, 0.8);
-  box-shadow: 0 10px 30px -5px rgba(37, 99, 235, 0.3);
+  border-color: rgba(59, 130, 246, 0.85);
+  box-shadow: 0 12px 32px -5px rgba(37, 99, 235, 0.35);
 }
 
 .house-card-green {
-  background: linear-gradient(145deg, rgba(20, 83, 45, 0.3) 0%, rgba(15, 23, 42, 0.9) 100%);
+  background: linear-gradient(145deg, rgba(20, 83, 45, 0.35) 0%, rgba(9, 13, 24, 0.95) 100%);
   border-color: rgba(34, 197, 94, 0.4);
 }
 .house-card-green:hover {
-  border-color: rgba(34, 197, 94, 0.8);
-  box-shadow: 0 10px 30px -5px rgba(22, 163, 74, 0.3);
+  border-color: rgba(34, 197, 94, 0.85);
+  box-shadow: 0 12px 32px -5px rgba(22, 163, 74, 0.35);
 }
 
 .house-card-red {
-  background: linear-gradient(145deg, rgba(127, 29, 29, 0.3) 0%, rgba(15, 23, 42, 0.9) 100%);
+  background: linear-gradient(145deg, rgba(127, 29, 29, 0.35) 0%, rgba(9, 13, 24, 0.95) 100%);
   border-color: rgba(239, 68, 68, 0.4);
 }
 .house-card-red:hover {
-  border-color: rgba(239, 68, 68, 0.8);
-  box-shadow: 0 10px 30px -5px rgba(220, 38, 38, 0.3);
+  border-color: rgba(239, 68, 68, 0.85);
+  box-shadow: 0 12px 32px -5px rgba(220, 38, 38, 0.35);
 }
 
 .house-card-yellow {
-  background: linear-gradient(145deg, rgba(120, 53, 15, 0.3) 0%, rgba(15, 23, 42, 0.9) 100%);
+  background: linear-gradient(145deg, rgba(120, 53, 15, 0.35) 0%, rgba(9, 13, 24, 0.95) 100%);
   border-color: rgba(234, 179, 8, 0.4);
 }
 .house-card-yellow:hover {
-  border-color: rgba(234, 179, 8, 0.8);
-  box-shadow: 0 10px 30px -5px rgba(217, 119, 6, 0.3);
+  border-color: rgba(234, 179, 8, 0.85);
+  box-shadow: 0 12px 32px -5px rgba(217, 119, 6, 0.35);
 }
 
-/* Medal badges */
+/* ==========================================================================
+   6. BADGES, MEDALS & HIGH CONTRAST ELEMENTS
+   ========================================================================== */
 .badge-gold {
   background: linear-gradient(135deg, #f59e0b, #d97706);
-  color: #0f172a;
+  color: #020617;
+  font-weight: 800;
 }
 
 .badge-silver {
-  background: linear-gradient(135deg, #e2e8f0, #94a3b8);
-  color: #0f172a;
+  background: linear-gradient(135deg, #f1f5f9, #94a3b8);
+  color: #020617;
+  font-weight: 800;
 }
 
 .badge-bronze {
-  background: linear-gradient(135deg, #f97316, #c2410c);
+  background: linear-gradient(135deg, #fb923c, #c2410c);
   color: #ffffff;
+  font-weight: 800;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #020617;
+  background: #060911;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #334155;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {

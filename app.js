@@ -293,60 +293,101 @@ function renderAll() {
   updateSyncTimestamp();
 }
 
-// 1. Olympic Podium Renderer
+// 1. 3D 4-House Cubes Championship Graph Renderer
 function renderPodium() {
   const container = document.getElementById('podium-container');
-  if (!container || state.houses.length < 3) return;
+  if (!container || state.houses.length === 0) return;
 
-  const h1 = state.houses[0]; // 1st Place
-  const h2 = state.houses[1]; // 2nd Place
-  const h3 = state.houses[2]; // 3rd Place
+  // Dynamically calculate heights based on house points
+  const maxPoints = Math.max(...state.houses.map(h => h.points), 1);
+  const minHeight = 140; // minimum height in px
+  const maxHeight = 310; // maximum height in px
 
-  // Podium order visually: 2nd place (left), 1st place (center elevated), 3rd place (right)
-  const podiumOrder = [
-    { house: h2, rank: 2, height: 'h-48 sm:h-64', medal: '🥈', badge: 'badge-silver', title: '2ND PLACE' },
-    { house: h1, rank: 1, height: 'h-64 sm:h-80', medal: '🥇', badge: 'badge-gold', title: 'CHAMPION / 1ST' },
-    { house: h3, rank: 3, height: 'h-40 sm:h-52', medal: '🥉', badge: 'badge-bronze', title: '3RD PLACE' }
-  ];
+  container.innerHTML = state.houses.map(house => {
+    const cfg = HOUSE_CONFIG[house.name] || {};
+    const isFirst = house.rank === 1;
+    const isSecond = house.rank === 2;
+    const isThird = house.rank === 3;
+    const isFourth = house.rank === 4;
 
-  container.innerHTML = podiumOrder.map(item => {
-    const cfg = HOUSE_CONFIG[item.house.name] || {};
-    const isFirst = item.rank === 1;
+    const cubeColorClass = `cube-${house.name.toLowerCase()}`;
+    
+    // Scale height proportionally to points (with a base height so 0/low pts still look 3D)
+    const heightPx = maxPoints > 0 
+      ? Math.round(minHeight + (house.points / maxPoints) * (maxHeight - minHeight))
+      : minHeight;
+
+    const rankMedal = isFirst ? '🥇' : isSecond ? '🥈' : isThird ? '🥉' : '🎖️';
+    const rankBadgeClass = isFirst ? 'badge-gold' : isSecond ? 'badge-silver' : isThird ? 'badge-bronze' : 'bg-slate-800 text-slate-300 border border-slate-700';
+    const rankTitle = isFirst ? '1ST PLACE' : isSecond ? '2ND PLACE' : isThird ? '3RD PLACE' : '4TH PLACE';
 
     return `
-      <div class="flex flex-col items-center justify-end ${isFirst ? '-mt-6 z-20' : 'z-10'}">
-        <!-- Floating House Trophy / Crest -->
-        <div class="mb-3 text-center transition-transform duration-300 hover:scale-105">
-          <div class="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-2xl ${cfg.bgBadge} border-2 ${cfg.border} shadow-lg shadow-${cfg.accent}/30 mb-2 relative">
-            <span class="text-2xl sm:text-3xl">${item.medal}</span>
-            ${isFirst ? '<span class="absolute -top-3 -right-2 text-xl animate-bounce">👑</span>' : ''}
+      <div class="cube-graph-card ${isFirst ? 'z-20 -mt-5' : 'z-10'}">
+        <!-- Floating Top Header: Crown/Medal, Rank, House Name, Points -->
+        <div class="mb-4 text-center transition-transform duration-300 hover:scale-105 flex flex-col items-center">
+          <!-- House Icon / Rank Badge -->
+          <div class="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl ${cfg.bgBadge} border-2 ${cfg.border} shadow-xl mb-2 relative">
+            <span class="text-2xl sm:text-3xl">${rankMedal}</span>
+            ${isFirst ? '<span class="absolute -top-3.5 -right-2 text-2xl animate-bounce" title="Championship Leader">👑</span>' : ''}
           </div>
-          <h4 class="font-display font-black text-sm sm:text-lg text-white uppercase tracking-wide">
-            ${item.house.name}
-          </h4>
-          <div class="text-xs sm:text-sm font-black font-mono text-amber-300">
-            ${item.house.points} <span class="text-[10px] text-slate-400 font-sans font-semibold">PTS</span>
-          </div>
-        </div>
 
-        <!-- 3D Podium Pedestal Block -->
-        <div class="w-full ${item.height} podium-pedestal podium-${item.rank} flex flex-col items-center justify-between p-3 sm:p-5 text-center">
-          <div class="pt-1">
-            <span class="px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-black tracking-wider uppercase ${item.badge} shadow-md">
-              ${item.title}
+          <!-- Rank Pill -->
+          <div class="mb-1">
+            <span class="px-2.5 py-1 rounded-full text-xs font-black tracking-wider uppercase ${rankBadgeClass} shadow-sm">
+              ${rankTitle}
             </span>
           </div>
 
-          <div class="font-display font-black text-4xl sm:text-6xl text-white/30 tracking-tighter">
-            #${item.rank}
+          <!-- House Name -->
+          <h4 class="font-display font-black text-lg sm:text-xl text-white uppercase tracking-wide">
+            ${house.name}
+          </h4>
+
+          <!-- Live Points Counter -->
+          <div class="font-display font-black text-2xl sm:text-3xl font-mono text-amber-300 tracking-tight flex items-baseline gap-1 mt-0.5">
+            ${house.points} <span class="text-xs text-slate-300 font-sans font-bold">PTS</span>
+          </div>
+        </div>
+
+        <!-- 3D Isometric Cube Pillar -->
+        <div class="cube-3d-wrap ${cubeColorClass}">
+          <div class="cube-3d-pillar" style="height: ${heightPx}px;">
+            <!-- Top Face (Glossy 3D top surface) -->
+            <div class="cube-face-top flex items-center justify-center">
+              <span class="w-6 h-1 rounded-full bg-white/40"></span>
+            </div>
+
+            <!-- Front Face (Graph surface with scale lines, points, and medals) -->
+            <div class="cube-face-front">
+              <div class="flex items-center justify-between text-xs font-bold text-white/90">
+                <span class="font-mono text-amber-300">#${house.rank}</span>
+                <span class="text-xs uppercase tracking-wider text-white/80">${house.name}</span>
+              </div>
+
+              <!-- Center Big Points Display -->
+              <div class="text-center my-auto py-2">
+                <span class="font-display font-black text-3xl sm:text-4xl text-white font-mono tracking-tight drop-shadow-md">
+                  ${house.points}
+                </span>
+                <div class="text-xs font-bold text-white/80 uppercase tracking-widest -mt-1">
+                  POINTS
+                </div>
+              </div>
+
+              <!-- Medal Counter Tally on Front -->
+              <div class="pt-2 border-t border-white/20 grid grid-cols-3 gap-1 text-center text-xs font-bold text-white">
+                <span title="Gold Medals">🥇 ${house.gold}</span>
+                <span title="Silver Medals">🥈 ${house.silver}</span>
+                <span title="Bronze Medals">🥉 ${house.bronze}</span>
+              </div>
+            </div>
+
+            <!-- Side Face (Shaded side for 3D volume) -->
+            <div class="cube-face-side"></div>
           </div>
 
-          <!-- Medal Counters -->
-          <div class="w-full pt-2 border-t border-slate-700/60 flex items-center justify-around text-[10px] sm:text-xs text-slate-300">
-            <span title="Gold Medals">🥇 <strong>${item.house.gold}</strong></span>
-            <span title="Silver Medals">🥈 <strong>${item.house.silver}</strong></span>
-            <span title="Bronze Medals">🥉 <strong>${item.house.bronze}</strong></span>
-          </div>
+          <!-- 3D Ambient Floor Glow -->
+          <div class="cube-floor-glow"></div>
         </div>
       </div>
     `;
@@ -368,44 +409,44 @@ function renderHouseCards() {
           <!-- Header: Rank badge & House Name -->
           <div class="flex items-center justify-between mb-3">
             <div class="flex items-center gap-2.5">
-              <div class="w-9 h-9 rounded-xl ${cfg.bgBadge} border flex items-center justify-center font-bold text-base">
+              <div class="w-10 h-10 rounded-xl ${cfg.bgBadge} border flex items-center justify-center font-bold text-base shadow">
                 <i class="fa-solid ${cfg.icon}"></i>
               </div>
               <div>
                 <h4 class="font-display font-black text-lg text-white tracking-wide uppercase">
                   ${house.name}
                 </h4>
-                <p class="text-[11px] text-slate-400 font-medium">${house.motto}</p>
+                <p class="text-xs text-slate-300 font-medium">${house.motto}</p>
               </div>
             </div>
-            <span class="px-2.5 py-1 rounded-lg bg-slate-950/80 border border-slate-700 font-mono font-black text-xs ${house.rank === 1 ? 'text-amber-400 border-amber-500/50' : 'text-slate-300'}">
+            <span class="px-3 py-1 rounded-lg bg-slate-950/80 border border-slate-700 font-mono font-black text-xs sm:text-sm ${house.rank === 1 ? 'text-amber-400 border-amber-500/50' : 'text-slate-300'}">
               RANK #${house.rank}
             </span>
           </div>
 
           <!-- Total Points Display -->
-          <div class="my-4 bg-slate-950/50 rounded-xl p-3.5 border border-slate-800/80 flex items-baseline justify-between">
-            <span class="text-xs font-semibold text-slate-400">Championship Score</span>
+          <div class="my-4 bg-slate-950/60 rounded-xl p-3.5 border border-slate-800/80 flex items-baseline justify-between">
+            <span class="text-sm font-semibold text-slate-300">Championship Score</span>
             <div class="text-right">
-              <span class="font-display font-black text-3xl text-white font-mono tracking-tight">${house.points}</span>
-              <span class="text-xs font-bold text-slate-400 ml-1">pts</span>
+              <span class="font-display font-black text-3xl sm:text-4xl text-white font-mono tracking-tight">${house.points}</span>
+              <span class="text-sm font-bold text-slate-400 ml-1">pts</span>
             </div>
           </div>
         </div>
 
         <!-- Medals Tally -->
-        <div class="pt-3 border-t border-slate-800/80 grid grid-cols-3 gap-1 text-center text-xs">
-          <div class="bg-slate-950/40 rounded-lg py-1.5 px-1 border border-slate-800/50">
+        <div class="pt-3 border-t border-slate-800/80 grid grid-cols-3 gap-1.5 text-center text-xs sm:text-sm">
+          <div class="bg-slate-950/50 rounded-lg py-2 px-1 border border-slate-800/60">
             <div class="text-amber-400 text-xs font-bold">🥇 Gold</div>
-            <div class="font-mono font-bold text-sm text-slate-200 mt-0.5">${house.gold}</div>
+            <div class="font-mono font-bold text-sm sm:text-base text-slate-100 mt-0.5">${house.gold}</div>
           </div>
-          <div class="bg-slate-950/40 rounded-lg py-1.5 px-1 border border-slate-800/50">
-            <div class="text-slate-300 text-xs font-bold">🥈 Silver</div>
-            <div class="font-mono font-bold text-sm text-slate-200 mt-0.5">${house.silver}</div>
+          <div class="bg-slate-950/50 rounded-lg py-2 px-1 border border-slate-800/60">
+            <div class="text-slate-200 text-xs font-bold">🥈 Silver</div>
+            <div class="font-mono font-bold text-sm sm:text-base text-slate-100 mt-0.5">${house.silver}</div>
           </div>
-          <div class="bg-slate-950/40 rounded-lg py-1.5 px-1 border border-slate-800/50">
-            <div class="text-amber-600 text-xs font-bold">🥉 Bronze</div>
-            <div class="font-mono font-bold text-sm text-slate-200 mt-0.5">${house.bronze}</div>
+          <div class="bg-slate-950/50 rounded-lg py-2 px-1 border border-slate-800/60">
+            <div class="text-amber-500 text-xs font-bold">🥉 Bronze</div>
+            <div class="font-mono font-bold text-sm sm:text-base text-slate-100 mt-0.5">${house.bronze}</div>
           </div>
         </div>
       </div>
@@ -436,14 +477,14 @@ function renderProgressBars() {
 
     return `
       <div class="space-y-1.5">
-        <div class="flex items-center justify-between text-xs font-semibold">
+        <div class="flex items-center justify-between text-sm font-semibold">
           <div class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full ${cfg.barBg}"></span>
+            <span class="w-3.5 h-3.5 rounded-full ${cfg.barBg}"></span>
             <span class="text-slate-200 font-display font-bold uppercase">${house.name} HOUSE</span>
           </div>
-          <span class="font-mono text-slate-300 font-bold">${house.points} pts</span>
+          <span class="font-mono text-slate-200 font-bold">${house.points} pts</span>
         </div>
-        <div class="w-full bg-slate-950 rounded-full h-3 p-0.5 border border-slate-800">
+        <div class="w-full bg-slate-950 rounded-full h-3.5 p-0.5 border border-slate-800">
           <div class="${cfg.barBg} h-full rounded-full transition-all duration-700 shadow-sm" style="width: ${percentage}%"></div>
         </div>
       </div>
@@ -469,12 +510,12 @@ function renderTicker() {
     const medal = e.position.startsWith('1') ? '🥇' : e.position.startsWith('2') ? '🥈' : '🥉';
     const cfg = HOUSE_CONFIG[e.house] || {};
     return `
-      <span class="inline-flex items-center gap-1.5 mx-4">
-        <span>${medal}</span>
-        <strong class="text-white">${e.eventName} (${e.category} ${e.gender}):</strong>
-        <span class="text-slate-200">${e.athleteName}</span>
-        <span class="px-1.5 py-0.2 text-[10px] rounded font-bold ${cfg.bgBadge || 'bg-slate-800 text-slate-300'}">${e.house}</span>
-        <span class="text-amber-400 font-mono font-bold">+${e.points} pts</span>
+      <span class="inline-flex items-center gap-2 mx-4">
+        <span class="text-base">${medal}</span>
+        <strong class="text-white text-sm">${e.eventName} (${e.category} ${e.gender}):</strong>
+        <span class="text-slate-200 font-semibold text-sm">${e.athleteName}</span>
+        <span class="px-2 py-0.5 text-xs rounded-md font-bold ${cfg.bgBadge || 'bg-slate-800 text-slate-300'}">${e.house}</span>
+        <span class="text-amber-400 font-mono font-bold text-sm">+${e.points} pts</span>
       </span>
     `;
   }).join('&bull;');
@@ -514,34 +555,34 @@ function renderEvents() {
                       event.position ? `Pos: ${event.position}` : 'Scheduled';
 
         return `
-          <div class="bg-slate-900/70 border border-slate-800 hover:border-slate-700 rounded-2xl p-4 sm:p-5 transition-all hover:-translate-y-1 shadow-md flex flex-col justify-between">
+          <div class="bg-[#0b101f]/90 border border-slate-800 hover:border-slate-700 rounded-2xl p-4 sm:p-5 transition-all hover:-translate-y-1 shadow-md flex flex-col justify-between">
             <div>
               <!-- Event Header -->
               <div class="flex items-center justify-between gap-2 mb-3">
-                <span class="px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-[10px] font-mono text-slate-400">
+                <span class="px-2.5 py-1 rounded bg-[#060911] border border-slate-800 text-xs font-mono font-bold text-slate-300">
                   ${event.resultId}
                 </span>
-                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold ${cfg.bgBadge || 'bg-slate-800 text-slate-300 border border-slate-700'}">
+                <span class="px-3 py-1 rounded-full text-xs font-black ${cfg.bgBadge || 'bg-slate-800 text-slate-300 border border-slate-700'}">
                   ${event.house}
                 </span>
               </div>
 
               <!-- Event Name & Division -->
-              <h4 class="font-display font-bold text-base text-white mb-1">
+              <h4 class="font-display font-black text-lg text-white mb-1">
                 ${event.eventName}
               </h4>
-              <p class="text-xs text-slate-400 font-medium mb-4">
+              <p class="text-sm text-slate-300 font-medium mb-4">
                 ${event.category} &bull; ${event.gender}
               </p>
 
               <!-- Athlete & Chest No -->
-              <div class="bg-slate-950/70 rounded-xl p-3 border border-slate-800/80 mb-3 space-y-1">
-                <div class="flex items-center justify-between text-xs">
-                  <span class="text-slate-400">Athlete:</span>
-                  <strong class="text-slate-100 font-semibold">${event.athleteName}</strong>
+              <div class="bg-[#060911]/80 rounded-xl p-3.5 border border-slate-800/80 mb-3 space-y-1.5">
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-slate-400 font-medium">Athlete:</span>
+                  <strong class="text-white font-bold">${event.athleteName}</strong>
                 </div>
-                <div class="flex items-center justify-between text-xs">
-                  <span class="text-slate-400">Chest No:</span>
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-slate-400 font-medium">Chest No:</span>
                   <span class="font-mono text-amber-400 font-bold">${event.chestNo}</span>
                 </div>
               </div>
@@ -549,10 +590,10 @@ function renderEvents() {
 
             <!-- Footer: Position & Points -->
             <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between">
-              <span class="text-xs font-bold ${isPodium ? 'text-amber-300' : 'text-slate-400'}">
+              <span class="text-sm font-bold ${isPodium ? 'text-amber-300' : 'text-slate-400'}">
                 ${medal}
               </span>
-              <span class="px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300 font-mono font-black text-xs">
+              <span class="px-3 py-1 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 font-mono font-black text-sm">
                 +${event.points} PTS
               </span>
             </div>
@@ -565,7 +606,7 @@ function renderEvents() {
   // Render Table
   if (tableBody) {
     if (state.filteredEvents.length === 0) {
-      tableBody.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-slate-500">No events found matching criteria.</td></tr>`;
+      tableBody.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-slate-400 font-medium">No events found matching criteria.</td></tr>`;
     } else {
       tableBody.innerHTML = state.filteredEvents.map(e => {
         const cfg = HOUSE_CONFIG[e.house] || {};
@@ -575,19 +616,19 @@ function renderEvents() {
                       e.position || '-';
 
         return `
-          <tr class="hover:bg-slate-800/40 transition-colors">
-            <td class="py-3 px-4 font-mono text-slate-400 text-xs">${e.resultId}</td>
-            <td class="py-3 px-4 font-bold text-white">${e.eventName}</td>
-            <td class="py-3 px-4 text-slate-300">${e.category} (${e.gender})</td>
-            <td class="py-3 px-4 text-slate-200 font-semibold">${e.athleteName}</td>
-            <td class="py-3 px-4 font-mono text-amber-400 font-bold">${e.chestNo}</td>
-            <td class="py-3 px-4">
-              <span class="px-2 py-0.5 rounded text-[10px] font-bold ${cfg.bgBadge || 'bg-slate-800 text-slate-300'}">
+          <tr class="hover:bg-slate-800/50 transition-colors">
+            <td class="py-3.5 px-4 font-mono text-slate-300 text-sm font-semibold">${e.resultId}</td>
+            <td class="py-3.5 px-4 font-bold text-white text-sm sm:text-base">${e.eventName}</td>
+            <td class="py-3.5 px-4 text-slate-300 text-sm">${e.category} (${e.gender})</td>
+            <td class="py-3.5 px-4 text-slate-100 font-bold text-sm sm:text-base">${e.athleteName}</td>
+            <td class="py-3.5 px-4 font-mono text-amber-400 font-bold text-sm">${e.chestNo}</td>
+            <td class="py-3.5 px-4">
+              <span class="px-2.5 py-1 rounded-md text-xs font-black ${cfg.bgBadge || 'bg-slate-800 text-slate-300'}">
                 ${e.house}
               </span>
             </td>
-            <td class="py-3 px-4 text-center font-bold text-amber-300">${medal}</td>
-            <td class="py-3 px-4 text-right font-mono font-bold text-amber-400">+${e.points}</td>
+            <td class="py-3.5 px-4 text-center font-bold text-amber-300 text-sm">${medal}</td>
+            <td class="py-3.5 px-4 text-right font-mono font-bold text-amber-400 text-sm sm:text-base">+${e.points}</td>
           </tr>
         `;
       }).join('');
@@ -659,7 +700,7 @@ function renderMatrix() {
   if (!tbody) return;
 
   if (state.categoryMatrix.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="8" class="text-center py-6 text-slate-500">Category matrix data syncing...</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8" class="text-center py-6 text-slate-400 font-medium">Category matrix data syncing...</td></tr>`;
     return;
   }
 
@@ -675,82 +716,106 @@ function renderMatrix() {
     const leadingCfg = HOUSE_CONFIG[row.leading] || {};
 
     return `
-      <tr class="${isTotal ? 'bg-slate-950 font-black text-amber-300' : 'hover:bg-slate-800/40'} transition-colors">
-        <td class="py-3.5 px-4 font-bold ${isTotal ? 'text-amber-400 font-display text-sm' : 'text-slate-100'}">
+      <tr class="${isTotal ? 'bg-[#060911] font-black text-amber-300' : 'hover:bg-slate-800/50'} transition-colors">
+        <td class="py-3.5 px-4 font-bold ${isTotal ? 'text-amber-400 font-display text-sm sm:text-base' : 'text-slate-100 text-sm'}">
           ${row.category}
         </td>
-        <td class="py-3.5 px-4 text-slate-400">
+        <td class="py-3.5 px-4 text-slate-300 text-sm">
           ${row.gender}
         </td>
-        <td class="py-3.5 px-4 text-center font-mono font-bold text-blue-400 bg-blue-950/20 border-x border-slate-800/60">
+        <td class="py-3.5 px-4 text-center font-mono font-bold text-blue-300 text-sm sm:text-base bg-blue-950/30 border-x border-slate-800/80">
           ${row.bluePts}
         </td>
-        <td class="py-3.5 px-4 text-center font-mono font-bold text-green-400 bg-green-950/20 border-r border-slate-800/60">
+        <td class="py-3.5 px-4 text-center font-mono font-bold text-green-300 text-sm sm:text-base bg-green-950/30 border-r border-slate-800/80">
           ${row.greenPts}
         </td>
-        <td class="py-3.5 px-4 text-center font-mono font-bold text-red-400 bg-red-950/20 border-r border-slate-800/60">
+        <td class="py-3.5 px-4 text-center font-mono font-bold text-red-300 text-sm sm:text-base bg-red-950/30 border-r border-slate-800/80">
           ${row.redPts}
         </td>
-        <td class="py-3.5 px-4 text-center font-mono font-bold text-yellow-400 bg-amber-950/20 border-r border-slate-800/60">
+        <td class="py-3.5 px-4 text-center font-mono font-bold text-yellow-300 text-sm sm:text-base bg-amber-950/30 border-r border-slate-800/80">
           ${row.yellowPts}
         </td>
-        <td class="py-3.5 px-4 text-center font-mono font-black text-white">
+        <td class="py-3.5 px-4 text-center font-mono font-black text-white text-sm sm:text-base">
           ${row.totalPts}
         </td>
         <td class="py-3.5 px-4 text-center">
           ${row.leading && row.leading !== '-' ? `
-            <span class="px-2 py-0.5 rounded text-[10px] font-black ${leadingCfg.bgBadge || 'bg-slate-800 text-slate-300'}">
+            <span class="px-2.5 py-1 rounded-md text-xs font-black ${leadingCfg.bgBadge || 'bg-slate-800 text-slate-300'} shadow-sm">
               👑 ${row.leading}
             </span>
-          ` : '<span class="text-slate-500">-</span>'}
+          ` : '<span class="text-slate-400 font-semibold">-</span>'}
         </td>
       </tr>
     `;
   }).join('');
 }
 
-// 7. Stadium / TV Screen Mode
+// 7. Stadium / TV Screen Mode - 3D 4-House Cubes Graph
 function renderStadiumOverlay() {
   const container = document.getElementById('stadium-podium-container');
   if (!container || state.houses.length === 0) return;
 
+  const maxPoints = Math.max(...state.houses.map(h => h.points), 1);
+  const minHeight = 160;
+  const maxHeight = 340;
+
   container.innerHTML = state.houses.map(h => {
     const cfg = HOUSE_CONFIG[h.name] || {};
     const isLeader = h.rank === 1;
+    const isSecond = h.rank === 2;
+    const isThird = h.rank === 3;
+    const medal = isLeader ? '🥇' : isSecond ? '🥈' : isThird ? '🥉' : '🎖️';
+    const cubeColorClass = `cube-${h.name.toLowerCase()}`;
+    const heightPx = maxPoints > 0 
+      ? Math.round(minHeight + (h.points / maxPoints) * (maxHeight - minHeight))
+      : minHeight;
 
     return `
-      <div class="bg-slate-900 border-2 ${isLeader ? 'border-amber-500 shadow-2xl shadow-amber-500/30 ring-4 ring-amber-500/20' : 'border-slate-800'} rounded-3xl p-6 sm:p-8 flex flex-col justify-between items-center text-center">
-        <div>
-          <span class="px-4 py-1.5 rounded-full text-sm font-black font-mono tracking-wider ${isLeader ? 'bg-amber-500 text-slate-950' : 'bg-slate-800 text-slate-300'}">
+      <div class="cube-graph-card ${isLeader ? 'z-20 -mt-6' : 'z-10'}">
+        <div class="mb-4 text-center flex flex-col items-center">
+          <div class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl ${cfg.bgBadge} border-2 ${cfg.border} shadow-2xl mb-2 relative">
+            <span class="text-3xl sm:text-4xl">${medal}</span>
+            ${isLeader ? '<span class="absolute -top-4 -right-2 text-3xl animate-bounce">👑</span>' : ''}
+          </div>
+          <span class="px-3.5 py-1 rounded-full text-xs sm:text-sm font-black tracking-wider uppercase mb-1.5 ${isLeader ? 'badge-gold' : 'bg-slate-800 text-slate-200 border border-slate-700'}">
             RANK #${h.rank}
           </span>
-          <div class="my-6">
-            <i class="fa-solid ${cfg.icon} text-5xl sm:text-6xl ${cfg.text}"></i>
-          </div>
           <h2 class="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-wide">
             ${h.name}
           </h2>
-          <p class="text-slate-400 text-sm font-semibold mt-1">${h.fullName}</p>
+          <div class="font-display font-black text-3xl sm:text-4xl font-mono text-amber-400 tracking-tight mt-1">
+            ${h.points} <span class="text-sm text-slate-300 font-sans font-bold">PTS</span>
+          </div>
         </div>
 
-        <div class="w-full my-6 py-5 bg-slate-950 rounded-2xl border border-slate-800">
-          <span class="text-xs uppercase tracking-wider text-slate-500 block font-bold">Total Points</span>
-          <span class="font-display font-black text-5xl sm:text-6xl text-amber-400 font-mono tracking-tight">${h.points}</span>
-        </div>
-
-        <div class="w-full grid grid-cols-3 gap-2 text-center text-xs">
-          <div class="bg-slate-950/60 p-2 rounded-xl border border-slate-800">
-            <span class="text-amber-400 block font-bold">🥇</span>
-            <strong class="text-white text-base">${h.gold}</strong>
+        <!-- 3D Cube Column -->
+        <div class="cube-3d-wrap ${cubeColorClass}">
+          <div class="cube-3d-pillar" style="height: ${heightPx}px;">
+            <div class="cube-face-top flex items-center justify-center">
+              <span class="w-8 h-1.5 rounded-full bg-white/40"></span>
+            </div>
+            <div class="cube-face-front">
+              <div class="flex items-center justify-between text-xs font-bold text-white/90">
+                <span class="font-mono text-amber-300 text-sm">#${h.rank}</span>
+                <span class="text-xs uppercase tracking-wider text-white/80">${h.name}</span>
+              </div>
+              <div class="text-center my-auto py-2">
+                <span class="font-display font-black text-4xl sm:text-5xl text-white font-mono tracking-tight drop-shadow-md">
+                  ${h.points}
+                </span>
+                <div class="text-xs font-bold text-white/80 uppercase tracking-widest">
+                  POINTS
+                </div>
+              </div>
+              <div class="pt-2 border-t border-white/25 grid grid-cols-3 gap-1 text-center text-xs sm:text-sm font-bold text-white">
+                <span title="Gold">🥇 ${h.gold}</span>
+                <span title="Silver">🥈 ${h.silver}</span>
+                <span title="Bronze">🥉 ${h.bronze}</span>
+              </div>
+            </div>
+            <div class="cube-face-side"></div>
           </div>
-          <div class="bg-slate-950/60 p-2 rounded-xl border border-slate-800">
-            <span class="text-slate-300 block font-bold">🥈</span>
-            <strong class="text-white text-base">${h.silver}</strong>
-          </div>
-          <div class="bg-slate-950/60 p-2 rounded-xl border border-slate-800">
-            <span class="text-amber-600 block font-bold">🥉</span>
-            <strong class="text-white text-base">${h.bronze}</strong>
-          </div>
+          <div class="cube-floor-glow"></div>
         </div>
       </div>
     `;

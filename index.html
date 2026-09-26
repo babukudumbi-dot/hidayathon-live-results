@@ -6,10 +6,10 @@
   <title>Hidayathon 2.O | Live Sports Meet Results & Championship Standings</title>
   
   <!-- Favicon & Meta -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏆</text></svg>">
+  <link rel="icon" type="image/png" href="logo.png" />
   <meta name="description" content="Live Scoreboard, House Championship Standings, and Event Results for Hidayathon 2.O Annual Sports Meet 2026-27." />
   
-  <!-- Google Fonts: Poppins & Montserrat & Outfit -->
+  <!-- Google Fonts: Outfit, Montserrat & Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
@@ -68,79 +68,86 @@
   
   <link rel="stylesheet" href="style.css" />
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen selection:bg-amber-500 selection:text-slate-950 antialiased overflow-x-hidden">
+<body class="bg-[#060911] text-slate-100 min-h-screen selection:bg-amber-500 selection:text-slate-950 antialiased overflow-x-hidden">
 
-  <!-- Background decorative glows -->
+  <!-- Background decorative glows matching 4 house colors -->
   <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-    <div class="absolute -top-40 -left-40 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl"></div>
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl"></div>
     <div class="absolute top-1/4 -right-40 w-96 h-96 bg-red-600/15 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-10 left-1/3 w-[30rem] h-[30rem] bg-amber-500/15 rounded-full blur-3xl"></div>
-    <div class="absolute -bottom-20 right-10 w-80 h-80 bg-green-600/15 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-10 left-1/3 w-[30rem] h-[30rem] bg-amber-500/12 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-20 right-10 w-80 h-80 bg-green-600/12 rounded-full blur-3xl"></div>
   </div>
 
   <div class="relative z-10 flex flex-col min-h-screen">
 
     <!-- TOP ANNOUNCEMENT & TICKER BAR -->
-    <header class="bg-slate-900/90 border-b border-slate-800/80 backdrop-blur-md sticky top-0 z-50 shadow-lg">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
+    <header class="bg-[#080d1a]/95 border-b border-slate-800/80 backdrop-blur-md sticky top-0 z-50 shadow-xl">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
         
         <!-- Logo & Title -->
-        <div class="flex items-center space-x-3">
-          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-tr from-amber-500 to-red-500 flex items-center justify-center shadow-lg shadow-amber-500/20 ring-2 ring-amber-400/30">
-            <i class="fa-solid fa-trophy text-slate-950 text-xl sm:text-2xl"></i>
+        <div class="flex items-center space-x-3.5 sm:space-x-4">
+          <!-- Event Logo replacing trophy -->
+          <div class="relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden bg-slate-900 border-2 border-amber-400/60 shadow-xl shadow-amber-500/20 flex items-center justify-center p-0.5 shrink-0 group transition-all duration-300 hover:border-amber-400">
+            <img 
+              id="event-logo-header" 
+              src="logo.png" 
+              alt="Hidayathon 2.O Official Logo" 
+              class="w-full h-full object-contain rounded-xl transition-transform duration-300 group-hover:scale-105"
+              onerror="this.onerror=null; this.src='logo.jpg';"
+            />
           </div>
           <div>
-            <div class="flex items-center space-x-2">
-              <span class="font-display font-black text-xl sm:text-2xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-300 to-yellow-200">
+            <div class="flex items-center space-x-2.5">
+              <span class="font-display font-black text-xl sm:text-2xl lg:text-3xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-300 to-yellow-200">
                 HIDAYATHON 2.O
               </span>
-              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-red-500/20 text-red-400 border border-red-500/30 flex items-center gap-1.5 animate-pulse">
+              <span class="px-2.5 py-1 rounded-full text-xs font-black tracking-wider uppercase bg-red-500/20 text-red-400 border border-red-500/30 flex items-center gap-1.5 animate-pulse shadow-sm">
                 <span class="w-2 h-2 rounded-full bg-red-500 inline-block animate-ping"></span>
                 LIVE
               </span>
             </div>
-            <p class="text-xs text-slate-400 font-medium tracking-wide">
+            <p class="text-sm text-slate-300 font-medium tracking-wide mt-0.5">
               Annual Sports Meet 2026 - 27 &bull; Official House Standings
             </p>
           </div>
         </div>
 
         <!-- Controls: Sync indicator, Manual Refresh, Kiosk Mode, Share -->
-        <div class="flex items-center space-x-2 sm:space-x-3">
+        <div class="flex items-center space-x-2.5 sm:space-x-3">
           <!-- Countdown Ring / Refresh status -->
-          <div class="hidden md:flex items-center space-x-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60 text-xs text-slate-300">
-            <i id="sync-icon" class="fa-solid fa-arrows-rotate text-amber-400 text-xs"></i>
-            <span>Next sync in <strong id="countdown-timer" class="text-amber-300 font-mono">15s</strong></span>
+          <div class="hidden md:flex items-center space-x-2 bg-slate-800/90 px-3.5 py-2 rounded-xl border border-slate-700/70 text-sm text-slate-200 shadow-sm">
+            <i id="sync-icon" class="fa-solid fa-arrows-rotate text-amber-400 text-sm"></i>
+            <span>Next sync in <strong id="countdown-timer" class="text-amber-300 font-mono font-bold">15s</strong></span>
           </div>
 
           <!-- Refresh Button -->
-          <button id="refresh-btn" title="Refresh Live Data" class="flex items-center space-x-1.5 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 text-xs font-semibold transition-all">
-            <i class="fa-solid fa-rotate text-slate-400"></i>
+          <button id="refresh-btn" title="Refresh Live Data" class="flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 px-3.5 py-2 rounded-xl border border-slate-700 text-sm font-bold transition-all shadow-sm">
+            <i class="fa-solid fa-rotate text-slate-300"></i>
             <span class="hidden sm:inline">Refresh</span>
           </button>
 
           <!-- Stadium / Projector Mode -->
-          <button id="stadium-btn" title="Fullscreen Stadium / TV Display Mode" class="flex items-center space-x-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 px-3 py-1.5 rounded-lg text-xs font-black transition-all shadow-md active:scale-95">
+          <button id="stadium-btn" title="Fullscreen Stadium / TV Display Mode" class="flex items-center space-x-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 px-3.5 py-2 rounded-xl text-sm font-black transition-all shadow-md active:scale-95">
             <i class="fa-solid fa-expand"></i>
             <span class="hidden sm:inline">Stadium Mode</span>
           </button>
 
           <!-- Share Button -->
-          <button id="share-btn" title="Share Live Results" class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg border border-slate-700 text-xs transition-all">
-            <i class="fa-solid fa-share-nodes text-sm"></i>
+          <button id="share-btn" title="Share Live Results" class="p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl border border-slate-700 text-sm transition-all shadow-sm">
+            <i class="fa-solid fa-share-nodes text-base"></i>
           </button>
         </div>
       </div>
 
-      <!-- Live Marquee Ticker -->
-      <div class="bg-slate-950/90 border-t border-slate-800/60 py-1.5 overflow-hidden text-xs">
+      <!-- Live Marquee Ticker (Slowed down for comfortable reading) -->
+      <div class="bg-[#04060d] border-t border-slate-800/80 py-2 overflow-hidden text-sm">
         <div class="max-w-7xl mx-auto px-4 flex items-center">
-          <div class="bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded text-[10px] uppercase tracking-wider flex items-center gap-1 shrink-0 mr-3 shadow">
+          <div class="bg-amber-500 text-slate-950 font-black px-2.5 py-1 rounded text-xs uppercase tracking-wider flex items-center gap-1.5 shrink-0 mr-3 shadow">
             <i class="fa-solid fa-bolt"></i>
             <span>LATEST</span>
           </div>
           <div class="overflow-hidden whitespace-nowrap w-full">
-            <div id="results-ticker" class="inline-block animate-marquee text-slate-300 font-medium">
+            <div id="results-ticker" class="inline-block animate-marquee text-slate-200 font-semibold text-sm">
               Loading live results from Google Sheet...
             </div>
           </div>
@@ -151,28 +158,28 @@
     <!-- MAIN CONTENT -->
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8 sm:space-y-12">
       
-      <!-- HERO & PODIUM CHAMPIONSHIP DASHBOARD -->
+      <!-- HERO & 3D 4-HOUSE CUBES CHAMPIONSHIP DASHBOARD -->
       <section id="podium-section" class="relative">
         <div class="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700 text-amber-400 text-xs font-semibold mb-3">
-            <i class="fa-solid fa-medal"></i>
-            <span>HOUSE CHAMPIONSHIP PODIUM</span>
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-800/90 border border-slate-700/80 text-amber-400 text-sm font-bold mb-3 shadow-md">
+            <i class="fa-solid fa-chart-column"></i>
+            <span>3D HOUSE CHAMPIONSHIP POINTS GRAPH</span>
           </div>
           <h2 class="font-display font-black text-2xl sm:text-4xl lg:text-5xl tracking-tight text-white uppercase">
             Overall House Standings
           </h2>
-          <p class="text-sm sm:text-base text-slate-400 mt-2">
-            Real-time championship leaderboard updated straight from the official scoring desk.
+          <p class="text-base sm:text-lg text-slate-300 mt-2 font-medium">
+            Real-time championship leaderboard visualized with 3D house cubes updated from the scoring desk.
           </p>
         </div>
 
-        <!-- 3D OLYMPIC PODIUM COMPONENT -->
-        <div class="relative max-w-4xl mx-auto mb-10 pt-4">
-          <div id="podium-container" class="grid grid-cols-3 gap-2 sm:gap-4 items-end justify-center min-h-[340px] sm:min-h-[420px]">
-            <!-- Injected via JavaScript based on current ranks -->
-            <div class="flex flex-col items-center justify-center p-6 text-center text-slate-400 col-span-3">
-              <i class="fa-solid fa-circle-notch fa-spin text-3xl text-amber-400 mb-2"></i>
-              <span>Loading championship podium...</span>
+        <!-- 3D 4-HOUSE CUBES GRAPH COMPONENT -->
+        <div class="relative max-w-5xl mx-auto mb-12 pt-6">
+          <div id="podium-container" class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 items-end justify-center min-h-[380px] sm:min-h-[460px] pb-6">
+            <!-- Injected via JavaScript: 3D cubes for all 4 houses -->
+            <div class="flex flex-col items-center justify-center p-8 text-center text-slate-300 col-span-2 lg:col-span-4">
+              <i class="fa-solid fa-circle-notch fa-spin text-4xl text-amber-400 mb-3"></i>
+              <span class="text-base font-semibold">Loading 3D house standings graph...</span>
             </div>
           </div>
         </div>
@@ -183,13 +190,13 @@
         </div>
 
         <!-- HOUSE POINTS COMPARISON BARS -->
-        <div class="mt-8 bg-slate-900/70 border border-slate-800/80 rounded-2xl p-5 sm:p-6 backdrop-blur-sm shadow-xl">
+        <div class="mt-8 bg-[#0a0f1d]/90 border border-slate-800 rounded-2xl p-5 sm:p-6 backdrop-blur-md shadow-xl">
           <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
             <h3 class="font-display font-bold text-base sm:text-lg text-white flex items-center gap-2">
               <i class="fa-solid fa-chart-column text-amber-400"></i>
               Points Comparison & Margin Tracker
             </h3>
-            <span class="text-xs text-slate-400 font-medium" id="highest-score-label">Leader margin: 0 pts</span>
+            <span class="text-sm text-slate-300 font-semibold" id="highest-score-label">Leader margin: 0 pts</span>
           </div>
           <div class="space-y-3" id="points-progress-bars">
             <!-- Rendered dynamically -->
@@ -198,18 +205,18 @@
       </section>
 
       <!-- NAVIGATION TABS FOR DETAILED SECTIONS -->
-      <div class="flex border-b border-slate-800 space-x-4 sm:space-x-8 text-sm sm:text-base font-semibold">
-        <button id="tab-events-btn" class="tab-btn pb-3 border-b-2 border-amber-500 text-amber-400 flex items-center gap-2 transition-all">
-          <i class="fa-solid fa-person-running"></i>
+      <div class="flex border-b border-slate-800 space-x-4 sm:space-x-8 text-base font-bold">
+        <button id="tab-events-btn" class="tab-btn pb-3.5 border-b-2 border-amber-500 text-amber-400 flex items-center gap-2 transition-all">
+          <i class="fa-solid fa-person-running text-lg"></i>
           <span>Live Event Results</span>
-          <span id="events-count-badge" class="ml-1 px-2 py-0.5 text-xs rounded-full bg-amber-500/20 text-amber-300 font-mono">0</span>
+          <span id="events-count-badge" class="ml-1 px-2.5 py-0.5 text-xs rounded-full bg-amber-500/20 text-amber-300 font-mono font-bold">0</span>
         </button>
-        <button id="tab-matrix-btn" class="tab-btn pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition-all">
-          <i class="fa-solid fa-table-cells"></i>
+        <button id="tab-matrix-btn" class="tab-btn pb-3.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition-all">
+          <i class="fa-solid fa-table-cells text-lg"></i>
           <span>Category & Gender Matrix</span>
         </button>
-        <button id="tab-dashboard-link-btn" class="tab-btn pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition-all">
-          <i class="fa-solid fa-table"></i>
+        <button id="tab-dashboard-link-btn" class="tab-btn pb-3.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition-all">
+          <i class="fa-solid fa-table text-lg"></i>
           <span>Google Sheet Source</span>
         </button>
       </div>
@@ -217,32 +224,32 @@
       <!-- SECTION 1: LIVE EVENT RESULTS EXPLORER -->
       <section id="events-tab-content" class="space-y-6">
         <!-- Search & Filter Controls -->
-        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 backdrop-blur-md shadow-lg space-y-4">
+        <div class="bg-[#0b101f]/90 border border-slate-800 rounded-2xl p-4 sm:p-5 backdrop-blur-md shadow-lg space-y-4">
           <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <!-- Search Bar -->
             <div class="relative flex-1">
-              <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+              <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-base"></i>
               <input 
                 type="text" 
                 id="event-search-input" 
                 placeholder="Search athlete, chest no, or event (e.g. 100m, Shot Put)..."
-                class="w-full bg-slate-950/80 border border-slate-700/80 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"
+                class="w-full bg-[#060911] border border-slate-700/80 rounded-xl pl-10 pr-4 py-2.5 text-sm sm:text-base text-slate-100 placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all font-medium"
               />
             </div>
 
             <!-- Clear Filters button -->
-            <button id="reset-filters-btn" class="text-xs text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1 self-end md:self-auto py-1">
+            <button id="reset-filters-btn" class="text-sm text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1.5 self-end md:self-auto py-1">
               <i class="fa-solid fa-filter-circle-xmark"></i>
               <span>Reset Filters</span>
             </button>
           </div>
 
           <!-- Filter Pills -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 border-t border-slate-800/80 text-xs">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 pt-3 border-t border-slate-800/80 text-sm">
             <!-- House Filter -->
             <div>
-              <label class="block text-slate-400 font-semibold mb-1">House</label>
-              <select id="filter-house" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-slate-200 focus:border-amber-500 focus:outline-none">
+              <label class="block text-slate-300 font-bold mb-1.5">House</label>
+              <select id="filter-house" class="w-full bg-[#060911] border border-slate-700 rounded-lg px-3 py-2.5 text-sm text-slate-100 font-medium focus:border-amber-500 focus:outline-none">
                 <option value="ALL">All Houses</option>
                 <option value="BLUE">Blue House</option>
                 <option value="GREEN">Green House</option>
@@ -253,8 +260,8 @@
 
             <!-- Category Filter -->
             <div>
-              <label class="block text-slate-400 font-semibold mb-1">Category</label>
-              <select id="filter-category" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-slate-200 focus:border-amber-500 focus:outline-none">
+              <label class="block text-slate-300 font-bold mb-1.5">Category</label>
+              <select id="filter-category" class="w-full bg-[#060911] border border-slate-700 rounded-lg px-3 py-2.5 text-sm text-slate-100 font-medium focus:border-amber-500 focus:outline-none">
                 <option value="ALL">All Categories</option>
                 <option value="LP Mini">LP Mini</option>
                 <option value="LP Kiddies">LP Kiddies</option>
@@ -266,8 +273,8 @@
 
             <!-- Gender Filter -->
             <div>
-              <label class="block text-slate-400 font-semibold mb-1">Gender</label>
-              <select id="filter-gender" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-slate-200 focus:border-amber-500 focus:outline-none">
+              <label class="block text-slate-300 font-bold mb-1.5">Gender</label>
+              <select id="filter-gender" class="w-full bg-[#060911] border border-slate-700 rounded-lg px-3 py-2.5 text-sm text-slate-100 font-medium focus:border-amber-500 focus:outline-none">
                 <option value="ALL">All Genders</option>
                 <option value="Boys">Boys</option>
                 <option value="Girls">Girls</option>
@@ -276,8 +283,8 @@
 
             <!-- Position Filter -->
             <div>
-              <label class="block text-slate-400 font-semibold mb-1">Position / Medal</label>
-              <select id="filter-position" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-slate-200 focus:border-amber-500 focus:outline-none">
+              <label class="block text-slate-300 font-bold mb-1.5">Position / Medal</label>
+              <select id="filter-position" class="w-full bg-[#060911] border border-slate-700 rounded-lg px-3 py-2.5 text-sm text-slate-100 font-medium focus:border-amber-500 focus:outline-none">
                 <option value="ALL">All Positions</option>
                 <option value="1">🥇 1st Place (Gold)</option>
                 <option value="2">🥈 2nd Place (Silver)</option>
@@ -289,14 +296,14 @@
         </div>
 
         <!-- View Controls & Count -->
-        <div class="flex items-center justify-between text-xs text-slate-400 px-1">
+        <div class="flex items-center justify-between text-sm text-slate-300 font-medium px-1">
           <span id="results-count-text">Showing 0 events</span>
-          <div class="flex items-center space-x-1 bg-slate-900 border border-slate-800 rounded-lg p-1">
-            <button id="view-card-btn" class="px-2.5 py-1 rounded bg-slate-800 text-amber-400 font-bold flex items-center gap-1.5 transition-all">
+          <div class="flex items-center space-x-1.5 bg-[#0b101f] border border-slate-800 rounded-xl p-1">
+            <button id="view-card-btn" class="px-3 py-1.5 rounded-lg bg-slate-800 text-amber-400 font-bold flex items-center gap-1.5 transition-all text-sm">
               <i class="fa-solid fa-grip"></i>
               <span class="hidden sm:inline">Cards</span>
             </button>
-            <button id="view-table-btn" class="px-2.5 py-1 rounded text-slate-400 hover:text-white flex items-center gap-1.5 transition-all">
+            <button id="view-table-btn" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white font-bold flex items-center gap-1.5 transition-all text-sm">
               <i class="fa-solid fa-list"></i>
               <span class="hidden sm:inline">Table</span>
             </button>
@@ -304,14 +311,14 @@
         </div>
 
         <!-- Event Cards Container -->
-        <div id="events-container-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div id="events-container-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           <!-- Injected dynamically -->
         </div>
 
         <!-- Event Table Container -->
-        <div id="events-container-table" class="hidden bg-slate-900/80 border border-slate-800 rounded-2xl overflow-x-auto shadow-xl">
-          <table class="w-full text-left text-xs sm:text-sm">
-            <thead class="bg-slate-950/80 text-slate-400 uppercase font-mono tracking-wider text-[11px] border-b border-slate-800">
+        <div id="events-container-table" class="hidden bg-[#0b101f]/90 border border-slate-800 rounded-2xl overflow-x-auto shadow-xl">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-[#050811] text-slate-200 uppercase font-mono tracking-wider text-xs sm:text-sm font-bold border-b border-slate-800">
               <tr>
                 <th class="py-3.5 px-4">Event ID</th>
                 <th class="py-3.5 px-4">Event Name</th>
@@ -323,7 +330,7 @@
                 <th class="py-3.5 px-4 text-right">Points</th>
               </tr>
             </thead>
-            <tbody id="events-table-body" class="divide-y divide-slate-800/60 font-medium">
+            <tbody id="events-table-body" class="divide-y divide-slate-800/70 font-medium">
               <!-- Injected dynamically -->
             </tbody>
           </table>
@@ -332,32 +339,32 @@
 
       <!-- SECTION 2: CATEGORY & GENDER MATRIX -->
       <section id="matrix-tab-content" class="hidden space-y-6">
-        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 backdrop-blur-md shadow-xl">
+        <div class="bg-[#0b101f]/90 border border-slate-800 rounded-2xl p-5 sm:p-6 backdrop-blur-md shadow-xl">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div>
-              <h3 class="font-display font-black text-xl text-white">Category & Division Points Matrix</h3>
-              <p class="text-xs text-slate-400">Detailed points breakdown across age categories and gender divisions</p>
+              <h3 class="font-display font-black text-xl sm:text-2xl text-white">Category & Division Points Matrix</h3>
+              <p class="text-sm text-slate-300 font-medium mt-0.5">Detailed points breakdown across age categories and gender divisions</p>
             </div>
             
             <!-- Matrix Gender Filter -->
-            <div class="inline-flex rounded-lg bg-slate-950 p-1 border border-slate-800 text-xs font-semibold">
-              <button id="matrix-gender-all" class="px-3 py-1.5 rounded-md bg-amber-500 text-slate-950 font-bold transition-all">All</button>
-              <button id="matrix-gender-boys" class="px-3 py-1.5 rounded-md text-slate-400 hover:text-white transition-all">Boys</button>
-              <button id="matrix-gender-girls" class="px-3 py-1.5 rounded-md text-slate-400 hover:text-white transition-all">Girls</button>
+            <div class="inline-flex rounded-xl bg-[#060911] p-1 border border-slate-800 text-sm font-bold">
+              <button id="matrix-gender-all" class="px-3.5 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-black transition-all">All</button>
+              <button id="matrix-gender-boys" class="px-3.5 py-1.5 rounded-lg text-slate-300 hover:text-white transition-all font-semibold">Boys</button>
+              <button id="matrix-gender-girls" class="px-3.5 py-1.5 rounded-lg text-slate-300 hover:text-white transition-all font-semibold">Girls</button>
             </div>
           </div>
 
           <!-- Responsive Matrix Table -->
           <div class="overflow-x-auto rounded-xl border border-slate-800">
-            <table class="w-full text-left text-xs sm:text-sm">
-              <thead class="bg-slate-950 text-slate-300 font-mono text-[11px] uppercase tracking-wider border-b border-slate-800">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-[#050811] text-slate-200 font-mono text-xs sm:text-sm uppercase tracking-wider font-bold border-b border-slate-800">
                 <tr>
                   <th class="py-3.5 px-4">Category</th>
                   <th class="py-3.5 px-4">Gender</th>
-                  <th class="py-3.5 px-4 text-center bg-blue-950/40 text-blue-400 border-x border-slate-800/80">BLUE</th>
-                  <th class="py-3.5 px-4 text-center bg-green-950/40 text-green-400 border-r border-slate-800/80">GREEN</th>
-                  <th class="py-3.5 px-4 text-center bg-red-950/40 text-red-400 border-r border-slate-800/80">RED</th>
-                  <th class="py-3.5 px-4 text-center bg-amber-950/40 text-yellow-400 border-r border-slate-800/80">YELLOW</th>
+                  <th class="py-3.5 px-4 text-center bg-blue-950/40 text-blue-300 border-x border-slate-800/80">BLUE</th>
+                  <th class="py-3.5 px-4 text-center bg-green-950/40 text-green-300 border-r border-slate-800/80">GREEN</th>
+                  <th class="py-3.5 px-4 text-center bg-red-950/40 text-red-300 border-r border-slate-800/80">RED</th>
+                  <th class="py-3.5 px-4 text-center bg-amber-950/40 text-yellow-300 border-r border-slate-800/80">YELLOW</th>
                   <th class="py-3.5 px-4 text-center font-bold text-white">Total</th>
                   <th class="py-3.5 px-4 text-center">Leading House</th>
                 </tr>
@@ -372,33 +379,33 @@
 
       <!-- SECTION 3: SOURCE & DASHBOARD LINK -->
       <section id="dashboard-tab-content" class="hidden space-y-6">
-        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 sm:p-8 backdrop-blur-md shadow-xl text-center max-w-2xl mx-auto space-y-5">
-          <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto text-2xl shadow-lg">
+        <div class="bg-[#0b101f]/90 border border-slate-800 rounded-2xl p-6 sm:p-8 backdrop-blur-md shadow-xl text-center max-w-2xl mx-auto space-y-5">
+          <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto text-3xl shadow-lg">
             <i class="fa-solid fa-file-excel"></i>
           </div>
           <h3 class="font-display font-black text-2xl text-white">
             Connected Google Spreadsheet
           </h3>
-          <p class="text-sm text-slate-300 leading-relaxed">
-            Data is stored and managed in the cloud. As scorers input positions, athlete names, and chest numbers on the field, this live website syncs automatically every 15 seconds.
+          <p class="text-sm sm:text-base text-slate-300 leading-relaxed font-medium">
+            Data is stored and managed live in Google Sheets. As scorers input positions, athlete names, and chest numbers on the ground, this live scoreboard refreshes automatically every 15 seconds.
           </p>
           
-          <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-left space-y-2 text-xs font-mono text-slate-400">
+          <div class="p-4 rounded-xl bg-[#060911] border border-slate-800 text-left space-y-2.5 text-sm font-mono text-slate-300">
             <div class="flex justify-between">
               <span>Spreadsheet:</span>
-              <span class="text-slate-200">Hidayathon 2.O Results</span>
+              <span class="text-white font-semibold">Hidayathon 2.O Results</span>
             </div>
             <div class="flex justify-between">
               <span>Scoreboard Tab:</span>
-              <span class="text-blue-400">Scoreboard (gid=0)</span>
+              <span class="text-blue-400 font-semibold">Scoreboard (gid=0)</span>
             </div>
             <div class="flex justify-between">
               <span>Event Results Tab:</span>
-              <span class="text-amber-400">Event_Results (gid=427537611)</span>
+              <span class="text-amber-400 font-semibold">Event_Results (gid=427537611)</span>
             </div>
             <div class="flex justify-between">
               <span>Dashboard Tab:</span>
-              <span class="text-green-400">Podium Dashboard (gid=433488836)</span>
+              <span class="text-green-400 font-semibold">Podium Dashboard (gid=433488836)</span>
             </div>
           </div>
 
@@ -407,7 +414,7 @@
               href="https://docs.google.com/spreadsheets/d/1rRUeY6iOaWIT7OPGMbJG6JnrYv7nOwUPiB8tHmOTep8/edit?usp=sharing" 
               target="_blank" 
               rel="noopener noreferrer" 
-              class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-lg shadow-emerald-600/30 transition-all hover:scale-105 active:scale-95"
+              class="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm sm:text-base shadow-lg shadow-emerald-600/30 transition-all hover:scale-105 active:scale-95"
             >
               <i class="fa-solid fa-arrow-up-right-from-square"></i>
               <span>Open Official Google Sheet</span>
@@ -419,73 +426,80 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="mt-auto border-t border-slate-900 bg-slate-950/80 py-6 text-center text-xs text-slate-500">
+    <footer class="mt-auto border-t border-slate-900 bg-[#04060e] py-6 text-center text-sm text-slate-400 font-medium">
       <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <div>
-          <strong class="text-slate-300">HIDAYATHON 2.O</strong> &bull; Annual Sports Meet 2026 - 27
-        </div>
         <div class="flex items-center gap-2">
+          <img src="logo.png" alt="Logo" class="w-6 h-6 object-contain inline-block rounded" onerror="this.onerror=null; this.src='logo.jpg';">
+          <strong class="text-slate-200">HIDAYATHON 2.O</strong> &bull; Annual Sports Meet 2026 - 27
+        </div>
+        <div class="flex items-center gap-2 text-xs sm:text-sm">
           <span>Official Scoring System</span>
           <span>&bull;</span>
-          <span id="last-updated-text">Synced just now</span>
+          <span id="last-updated-text" class="text-slate-300">Synced just now</span>
         </div>
       </div>
     </footer>
   </div>
 
   <!-- STADIUM / FULLSCREEN OVERLAY (Hidden by default) -->
-  <div id="stadium-overlay" class="fixed inset-0 bg-slate-950 z-[100] hidden flex-col p-6 sm:p-10 overflow-y-auto">
+  <div id="stadium-overlay" class="fixed inset-0 bg-[#060911] z-[100] hidden flex-col p-6 sm:p-10 overflow-y-auto">
     <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
       <div class="flex items-center space-x-4">
-        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-red-500 flex items-center justify-center text-3xl text-slate-950 font-black shadow-lg">
-          <i class="fa-solid fa-trophy"></i>
+        <!-- Event logo replacing trophy in stadium overlay -->
+        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden bg-slate-900 border-2 border-amber-400/60 shadow-xl flex items-center justify-center p-1 shrink-0">
+          <img 
+            src="logo.png" 
+            alt="Hidayathon 2.O Logo" 
+            class="w-full h-full object-contain rounded-xl"
+            onerror="this.onerror=null; this.src='logo.jpg';"
+          />
         </div>
         <div>
-          <h1 class="font-display font-black text-3xl sm:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-200">
+          <h1 class="font-display font-black text-2xl sm:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-200">
             HIDAYATHON 2.O &bull; LIVE STADIUM ARENA
           </h1>
-          <p class="text-slate-400 text-base font-semibold">Official House Standings & Championship Podium</p>
+          <p class="text-slate-300 text-sm sm:text-base font-semibold">Official 3D House Standings & Championship Points Graph</p>
         </div>
       </div>
       <div class="flex items-center space-x-4">
-        <span class="px-4 py-1.5 rounded-full bg-red-600 text-white font-bold text-sm flex items-center gap-2 animate-pulse">
+        <span class="px-4 py-1.5 rounded-full bg-red-600 text-white font-bold text-sm flex items-center gap-2 animate-pulse shadow-md">
           <span class="w-2.5 h-2.5 rounded-full bg-white animate-ping"></span>
           LIVE BROADCAST
         </span>
-        <button id="close-stadium-btn" class="p-3 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl text-lg font-bold transition-all">
+        <button id="close-stadium-btn" class="p-3 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-xl text-lg font-bold transition-all shadow">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
     </div>
 
-    <!-- Stadium Big Podium & Standings -->
+    <!-- Stadium Big 3D Cubes & Standings -->
     <div class="flex-1 flex flex-col justify-center">
-      <div id="stadium-podium-container" class="grid grid-cols-4 gap-6 max-w-6xl mx-auto w-full mb-8">
-        <!-- Rendered dynamically with extra large typography -->
+      <div id="stadium-podium-container" class="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto w-full mb-8 items-end">
+        <!-- Rendered dynamically with 3D cubes for all 4 houses -->
       </div>
     </div>
   </div>
 
   <!-- SHARE MODAL -->
-  <div id="share-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl space-y-4">
+  <div id="share-modal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#0b101f] border border-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl space-y-4">
       <div class="flex items-center justify-between">
         <h3 class="font-display font-bold text-lg text-white">Share Live Results</h3>
-        <button id="close-share-modal" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+        <button id="close-share-modal" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
-      <p class="text-xs text-slate-300">
-        Share the live results page with parents, students, teachers, and house supporters:
+      <p class="text-sm text-slate-300 font-medium">
+        Share the live results page with athletes, parents, teachers, and house supporters:
       </p>
       <div class="flex gap-2">
-        <input id="share-url-input" type="text" readonly class="flex-1 bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-300 font-mono" />
-        <button id="copy-share-url-btn" class="px-3 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-lg text-xs transition-all flex items-center gap-1.5">
+        <input id="share-url-input" type="text" readonly class="flex-1 bg-[#060911] border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono" />
+        <button id="copy-share-url-btn" class="px-3.5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-lg text-sm transition-all flex items-center gap-1.5 shadow">
           <i class="fa-solid fa-copy"></i>
           <span>Copy</span>
         </button>
       </div>
       <div class="pt-2 flex gap-3">
-        <a id="whatsapp-share-btn" target="_blank" class="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-lg transition-all">
-          <i class="fa-brands fa-whatsapp text-base"></i>
+        <a id="whatsapp-share-btn" target="_blank" class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg transition-all">
+          <i class="fa-brands fa-whatsapp text-lg"></i>
           <span>Share on WhatsApp</span>
         </a>
       </div>
