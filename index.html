@@ -1,153 +1,95 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hidayathon 2.O | Live Sports Meet Results & Championship Standings</title>
-  
-  <!-- Favicon & Meta -->
   <link rel="icon" type="image/png" href="logo.png" />
   <meta name="description" content="Live Scoreboard, House Championship Standings, and Event Results for Hidayathon 2.O Annual Sports Meet 2026-27." />
-  
-  <!-- Google Fonts: Outfit, Montserrat & Space Grotesk -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-  
-  <!-- Font Awesome 6 -->
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
             sans: ['Outfit', 'sans-serif'],
             display: ['Montserrat', 'sans-serif'],
-            mono: ['Space Grotesk', 'monospace'],
           },
           colors: {
-            houseBlue: {
-              DEFAULT: '#2563eb',
-              light: '#60a5fa',
-              dark: '#1e40af',
-              glow: 'rgba(37, 99, 235, 0.45)',
-            },
-            houseGreen: {
-              DEFAULT: '#16a34a',
-              light: '#4ade80',
-              dark: '#166534',
-              glow: 'rgba(22, 163, 74, 0.45)',
-            },
-            houseRed: {
-              DEFAULT: '#dc2626',
-              light: '#f87171',
-              dark: '#991b1b',
-              glow: 'rgba(220, 38, 38, 0.45)',
-            },
-            houseYellow: {
-              DEFAULT: '#d97706',
-              light: '#fde047',
-              dark: '#b45309',
-              glow: 'rgba(217, 119, 6, 0.45)',
-            },
-            gold: '#f59e0b',
-            silver: '#94a3b8',
-            bronze: '#d97706',
+            bg: '#0a0a0a',
+            surface: '#161616',
+            surface2: '#222222',
+            fg: '#f4f4f4',
+            muted: '#8d8d8d',
+            primary: '#ccff00',
+            primaryFg: '#111111',
+            border: '#2c2c2c',
+            houseBlue: '#3b82f6',
+            houseGreen: '#22c55e',
+            houseRed: '#ef4444',
+            houseYellow: '#eab308',
           }
         }
       }
     }
   </script>
-  
-  <!-- Canvas Confetti for Podium celebration -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
-  
   <link rel="stylesheet" href="style.css" />
 </head>
-<body class="bg-[#060911] text-slate-100 min-h-screen selection:bg-amber-500 selection:text-slate-950 antialiased overflow-x-hidden">
-
-  <!-- Background decorative glows matching 4 house colors -->
-  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-    <div class="absolute -top-40 -left-40 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl"></div>
-    <div class="absolute top-1/4 -right-40 w-96 h-96 bg-red-600/15 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-10 left-1/3 w-[30rem] h-[30rem] bg-amber-500/12 rounded-full blur-3xl"></div>
-    <div class="absolute -bottom-20 right-10 w-80 h-80 bg-green-600/12 rounded-full blur-3xl"></div>
-  </div>
+<body class="bg-bg text-fg min-h-screen antialiased">
+  <div class="accent-bar"></div>
 
   <div class="relative z-10 flex flex-col min-h-screen">
-
-    <!-- TOP ANNOUNCEMENT & TICKER BAR -->
-    <header class="bg-[#080d1a]/95 border-b border-slate-800/80 backdrop-blur-md sticky top-0 z-50 shadow-xl">
+    <header class="sticky top-0 z-50 border-b border-border bg-bg/95 backdrop-blur-md" style="border-color:#2c2c2c">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
-        
-        <!-- Logo & Title -->
-        <div class="flex items-center space-x-3.5 sm:space-x-4">
-          <!-- Event Logo replacing trophy -->
-          <div class="relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden bg-slate-900 border-2 border-amber-400/60 shadow-xl shadow-amber-500/20 flex items-center justify-center p-0.5 shrink-0 group transition-all duration-300 hover:border-amber-400">
-            <img 
-              id="event-logo-header" 
-              src="logo.png" 
-              alt="Hidayathon 2.O Official Logo" 
-              class="w-full h-full object-contain rounded-xl transition-transform duration-300 group-hover:scale-105"
-              onerror="this.onerror=null; this.src='logo.jpg';"
-            />
+        <div class="flex items-center gap-3.5">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden border-2 border-primary/60 bg-surface p-0.5 shrink-0" style="border-color:rgba(204,255,0,0.6)">
+            <img src="logo.png" alt="Hidayathon 2.O Logo" class="w-full h-full object-contain" onerror="this.onerror=null;this.src='logo.jpg';" />
           </div>
           <div>
-            <div class="flex items-center space-x-2.5">
-              <span class="font-display font-black text-xl sm:text-2xl lg:text-3xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-300 to-yellow-200">
-                HIDAYATHON 2.O
-              </span>
-              <span class="px-2.5 py-1 rounded-full text-xs font-black tracking-wider uppercase bg-red-500/20 text-red-400 border border-red-500/30 flex items-center gap-1.5 animate-pulse shadow-sm">
-                <span class="w-2 h-2 rounded-full bg-red-500 inline-block animate-ping"></span>
+            <div class="flex items-center gap-2.5 flex-wrap">
+              <span class="font-display font-black text-xl sm:text-2xl lg:text-3xl tracking-wider text-fg">HIDAYATHON 2.O</span>
+              <span class="px-2.5 py-1 rounded-full text-sm font-black tracking-wider uppercase bg-red-500/20 text-red-400 border border-red-500/40 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
                 LIVE
               </span>
             </div>
-            <p class="text-sm text-slate-300 font-medium tracking-wide mt-0.5">
-              Annual Sports Meet 2026 - 27 &bull; Official House Standings
-            </p>
+            <p class="text-base text-muted font-medium mt-0.5">Annual Sports Meet 2026–27 · Official House Standings</p>
           </div>
         </div>
 
-        <!-- Controls: Sync indicator, Manual Refresh, Kiosk Mode, Share -->
-        <div class="flex items-center space-x-2.5 sm:space-x-3">
-          <!-- Countdown Ring / Refresh status -->
-          <div class="hidden md:flex items-center space-x-2 bg-slate-800/90 px-3.5 py-2 rounded-xl border border-slate-700/70 text-sm text-slate-200 shadow-sm">
-            <i id="sync-icon" class="fa-solid fa-arrows-rotate text-amber-400 text-sm"></i>
-            <span>Next sync in <strong id="countdown-timer" class="text-amber-300 font-mono font-bold">15s</strong></span>
+        <div class="flex items-center gap-2.5">
+          <div class="hidden md:flex items-center gap-2 bg-surface px-3.5 py-2 rounded-xl border text-base" style="border-color:#2c2c2c">
+            <i id="sync-icon" class="fa-solid fa-arrows-rotate text-primary text-sm" style="color:#ccff00"></i>
+            <span>Next sync in <strong id="countdown-timer" class="font-mono font-bold" style="color:#ccff00">15s</strong></span>
           </div>
-
-          <!-- Refresh Button -->
-          <button id="refresh-btn" title="Refresh Live Data" class="flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 px-3.5 py-2 rounded-xl border border-slate-700 text-sm font-bold transition-all shadow-sm">
-            <i class="fa-solid fa-rotate text-slate-300"></i>
+          <button id="refresh-btn" title="Refresh Live Data" class="flex items-center gap-2 bg-surface hover:bg-surface2 text-fg px-3.5 py-2 rounded-xl border text-base font-bold min-h-11" style="border-color:#2c2c2c">
+            <i class="fa-solid fa-rotate"></i>
             <span class="hidden sm:inline">Refresh</span>
           </button>
-
-          <!-- Stadium / Projector Mode -->
-          <button id="stadium-btn" title="Fullscreen Stadium / TV Display Mode" class="flex items-center space-x-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 px-3.5 py-2 rounded-xl text-sm font-black transition-all shadow-md active:scale-95">
+          <button id="stadium-btn" title="Stadium Mode" class="flex items-center gap-2 px-3.5 py-2 rounded-xl text-base font-black min-h-11" style="background:#ccff00;color:#111">
             <i class="fa-solid fa-expand"></i>
             <span class="hidden sm:inline">Stadium Mode</span>
           </button>
-
-          <!-- Share Button -->
-          <button id="share-btn" title="Share Live Results" class="p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl border border-slate-700 text-sm transition-all shadow-sm">
-            <i class="fa-solid fa-share-nodes text-base"></i>
+          <button id="share-btn" title="Share" class="p-2.5 bg-surface hover:bg-surface2 rounded-xl border min-h-11 min-w-11" style="border-color:#2c2c2c">
+            <i class="fa-solid fa-share-nodes"></i>
           </button>
         </div>
       </div>
 
-      <!-- Live Marquee Ticker (Slowed down for comfortable reading) -->
-      <div class="bg-[#04060d] border-t border-slate-800/80 py-2 overflow-hidden text-sm">
+      <div class="border-t py-2.5 overflow-hidden" style="border-color:#2c2c2c;background:#0a0a0a">
         <div class="max-w-7xl mx-auto px-4 flex items-center">
-          <div class="bg-amber-500 text-slate-950 font-black px-2.5 py-1 rounded text-xs uppercase tracking-wider flex items-center gap-1.5 shrink-0 mr-3 shadow">
+          <div class="shrink-0 mr-3 flex items-center gap-1.5 px-2.5 py-1 rounded text-sm font-black tracking-wider uppercase" style="background:#ccff00;color:#111">
             <i class="fa-solid fa-bolt"></i>
-            <span>LATEST</span>
+            Latest
           </div>
           <div class="overflow-hidden whitespace-nowrap w-full">
-            <div id="results-ticker" class="inline-block animate-marquee text-slate-200 font-semibold text-sm">
+            <div id="results-ticker" class="ticker-track text-base font-semibold text-fg">
               Loading live results from Google Sheet...
             </div>
           </div>
@@ -155,101 +97,76 @@
       </div>
     </header>
 
-    <!-- MAIN CONTENT -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8 sm:space-y-12">
-      
-      <!-- HERO & 3D 4-HOUSE CUBES CHAMPIONSHIP DASHBOARD -->
-      <section id="podium-section" class="relative">
-        <div class="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-800/90 border border-slate-700/80 text-amber-400 text-sm font-bold mb-3 shadow-md">
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+      <section>
+        <div class="text-center max-w-3xl mx-auto mb-8">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border bg-surface text-base font-bold mb-3" style="border-color:#2c2c2c;color:#ccff00">
             <i class="fa-solid fa-chart-column"></i>
-            <span>3D HOUSE CHAMPIONSHIP POINTS GRAPH</span>
+            3D House Championship Points Graph
           </div>
-          <h2 class="font-display font-black text-2xl sm:text-4xl lg:text-5xl tracking-tight text-white uppercase">
+          <h2 class="font-display font-black text-3xl sm:text-4xl lg:text-5xl tracking-tight text-fg uppercase">
             Overall House Standings
           </h2>
-          <p class="text-base sm:text-lg text-slate-300 mt-2 font-medium">
-            Real-time championship leaderboard visualized with 3D house cubes updated from the scoring desk.
+          <p class="text-lg text-muted mt-2 font-medium">
+            Four house cubes scaled to live points — each cube wears its house colour.
           </p>
         </div>
 
-        <!-- 3D 4-HOUSE CUBES GRAPH COMPONENT -->
-        <div class="relative max-w-5xl mx-auto mb-12 pt-6">
-          <div id="podium-container" class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 items-end justify-center min-h-[380px] sm:min-h-[460px] pb-6">
-            <!-- Injected via JavaScript: 3D cubes for all 4 houses -->
-            <div class="flex flex-col items-center justify-center p-8 text-center text-slate-300 col-span-2 lg:col-span-4">
-              <i class="fa-solid fa-circle-notch fa-spin text-4xl text-amber-400 mb-3"></i>
-              <span class="text-base font-semibold">Loading 3D house standings graph...</span>
-            </div>
+        <div id="podium-container" class="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 items-end min-h-[380px] pb-6">
+          <div class="col-span-2 lg:col-span-4 flex flex-col items-center justify-center p-8 text-muted">
+            <i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3" style="color:#ccff00"></i>
+            <span class="text-base font-semibold">Loading 3D house standings...</span>
           </div>
         </div>
 
-        <!-- 4 HOUSE SUMMARY CARDS -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6" id="house-cards-grid">
-          <!-- House cards rendered dynamically -->
-        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10" id="house-cards-grid"></div>
 
-        <!-- HOUSE POINTS COMPARISON BARS -->
-        <div class="mt-8 bg-[#0a0f1d]/90 border border-slate-800 rounded-2xl p-5 sm:p-6 backdrop-blur-md shadow-xl">
+        <div class="mt-8 bg-surface border rounded-2xl p-5 sm:p-6" style="border-color:#2c2c2c">
           <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-            <h3 class="font-display font-bold text-base sm:text-lg text-white flex items-center gap-2">
-              <i class="fa-solid fa-chart-column text-amber-400"></i>
-              Points Comparison & Margin Tracker
+            <h3 class="font-display font-bold text-lg text-fg flex items-center gap-2">
+              <i class="fa-solid fa-fire" style="color:#ccff00"></i>
+              Points Comparison
             </h3>
-            <span class="text-sm text-slate-300 font-semibold" id="highest-score-label">Leader margin: 0 pts</span>
+            <span class="text-base font-semibold text-muted" id="highest-score-label">Leader margin: 0 pts</span>
           </div>
-          <div class="space-y-3" id="points-progress-bars">
-            <!-- Rendered dynamically -->
-          </div>
+          <div class="space-y-3" id="points-progress-bars"></div>
         </div>
       </section>
 
-      <!-- NAVIGATION TABS FOR DETAILED SECTIONS -->
-      <div class="flex border-b border-slate-800 space-x-4 sm:space-x-8 text-base font-bold">
-        <button id="tab-events-btn" class="tab-btn pb-3.5 border-b-2 border-amber-500 text-amber-400 flex items-center gap-2 transition-all">
-          <i class="fa-solid fa-person-running text-lg"></i>
-          <span>Live Event Results</span>
-          <span id="events-count-badge" class="ml-1 px-2.5 py-0.5 text-xs rounded-full bg-amber-500/20 text-amber-300 font-mono font-bold">0</span>
+      <div class="flex border-b space-x-4 sm:space-x-8 text-base font-bold overflow-x-auto" style="border-color:#2c2c2c">
+        <button id="tab-events-btn" class="tab-btn pb-3.5 border-b-2 flex items-center gap-2 whitespace-nowrap min-h-11" style="border-color:#ccff00;color:#ccff00">
+          <i class="fa-solid fa-person-running"></i>
+          Live Event Results
+          <span id="events-count-badge" class="ml-1 px-2.5 py-0.5 text-sm rounded-full font-mono font-bold" style="background:rgba(204,255,0,0.2);color:#ccff00">0</span>
         </button>
-        <button id="tab-matrix-btn" class="tab-btn pb-3.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition-all">
-          <i class="fa-solid fa-table-cells text-lg"></i>
-          <span>Category & Gender Matrix</span>
+        <button id="tab-matrix-btn" class="tab-btn pb-3.5 border-b-2 border-transparent text-muted hover:text-fg flex items-center gap-2 whitespace-nowrap min-h-11">
+          <i class="fa-solid fa-table-cells"></i>
+          Category & Gender Matrix
         </button>
-        <button id="tab-dashboard-link-btn" class="tab-btn pb-3.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition-all">
-          <i class="fa-solid fa-table text-lg"></i>
-          <span>Google Sheet Source</span>
+        <button id="tab-dashboard-link-btn" class="tab-btn pb-3.5 border-b-2 border-transparent text-muted hover:text-fg flex items-center gap-2 whitespace-nowrap min-h-11">
+          <i class="fa-solid fa-file-excel"></i>
+          Google Sheet Source
         </button>
       </div>
 
-      <!-- SECTION 1: LIVE EVENT RESULTS EXPLORER -->
       <section id="events-tab-content" class="space-y-6">
-        <!-- Search & Filter Controls -->
-        <div class="bg-[#0b101f]/90 border border-slate-800 rounded-2xl p-4 sm:p-5 backdrop-blur-md shadow-lg space-y-4">
+        <div class="bg-surface border rounded-2xl p-4 sm:p-5 space-y-4" style="border-color:#2c2c2c">
           <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <!-- Search Bar -->
             <div class="relative flex-1">
-              <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-base"></i>
-              <input 
-                type="text" 
-                id="event-search-input" 
-                placeholder="Search athlete, chest no, or event (e.g. 100m, Shot Put)..."
-                class="w-full bg-[#060911] border border-slate-700/80 rounded-xl pl-10 pr-4 py-2.5 text-sm sm:text-base text-slate-100 placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all font-medium"
-              />
+              <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-muted"></i>
+              <input type="text" id="event-search-input" placeholder="Search athlete, chest no, or event…"
+                class="w-full bg-bg border rounded-xl pl-10 pr-4 py-2.5 text-base text-fg placeholder-muted focus:outline-none"
+                style="border-color:#2c2c2c" />
             </div>
-
-            <!-- Clear Filters button -->
-            <button id="reset-filters-btn" class="text-sm text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1.5 self-end md:self-auto py-1">
+            <button id="reset-filters-btn" class="text-base font-bold flex items-center gap-1.5 self-end md:self-auto min-h-11" style="color:#ccff00">
               <i class="fa-solid fa-filter-circle-xmark"></i>
-              <span>Reset Filters</span>
+              Reset Filters
             </button>
           </div>
-
-          <!-- Filter Pills -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 pt-3 border-t border-slate-800/80 text-sm">
-            <!-- House Filter -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 pt-3 border-t text-base" style="border-color:#2c2c2c">
             <div>
-              <label class="block text-slate-300 font-bold mb-1.5">House</label>
-              <select id="filter-house" class="w-full bg-[#060911] border border-slate-700 rounded-lg px-3 py-2.5 text-sm text-slate-100 font-medium focus:border-amber-500 focus:outline-none">
+              <label class="block text-muted font-bold mb-1.5">House</label>
+              <select id="filter-house" class="w-full bg-bg border rounded-lg px-3 py-2.5 text-base text-fg focus:outline-none" style="border-color:#2c2c2c">
                 <option value="ALL">All Houses</option>
                 <option value="BLUE">Blue House</option>
                 <option value="GREEN">Green House</option>
@@ -257,11 +174,9 @@
                 <option value="YELLOW">Yellow House</option>
               </select>
             </div>
-
-            <!-- Category Filter -->
             <div>
-              <label class="block text-slate-300 font-bold mb-1.5">Category</label>
-              <select id="filter-category" class="w-full bg-[#060911] border border-slate-700 rounded-lg px-3 py-2.5 text-sm text-slate-100 font-medium focus:border-amber-500 focus:outline-none">
+              <label class="block text-muted font-bold mb-1.5">Category</label>
+              <select id="filter-category" class="w-full bg-bg border rounded-lg px-3 py-2.5 text-base text-fg focus:outline-none" style="border-color:#2c2c2c">
                 <option value="ALL">All Categories</option>
                 <option value="LP Mini">LP Mini</option>
                 <option value="LP Kiddies">LP Kiddies</option>
@@ -270,243 +185,171 @@
                 <option value="Junior">Junior</option>
               </select>
             </div>
-
-            <!-- Gender Filter -->
             <div>
-              <label class="block text-slate-300 font-bold mb-1.5">Gender</label>
-              <select id="filter-gender" class="w-full bg-[#060911] border border-slate-700 rounded-lg px-3 py-2.5 text-sm text-slate-100 font-medium focus:border-amber-500 focus:outline-none">
+              <label class="block text-muted font-bold mb-1.5">Gender</label>
+              <select id="filter-gender" class="w-full bg-bg border rounded-lg px-3 py-2.5 text-base text-fg focus:outline-none" style="border-color:#2c2c2c">
                 <option value="ALL">All Genders</option>
                 <option value="Boys">Boys</option>
                 <option value="Girls">Girls</option>
               </select>
             </div>
-
-            <!-- Position Filter -->
             <div>
-              <label class="block text-slate-300 font-bold mb-1.5">Position / Medal</label>
-              <select id="filter-position" class="w-full bg-[#060911] border border-slate-700 rounded-lg px-3 py-2.5 text-sm text-slate-100 font-medium focus:border-amber-500 focus:outline-none">
+              <label class="block text-muted font-bold mb-1.5">Position / Medal</label>
+              <select id="filter-position" class="w-full bg-bg border rounded-lg px-3 py-2.5 text-base text-fg focus:outline-none" style="border-color:#2c2c2c">
                 <option value="ALL">All Positions</option>
-                <option value="1">🥇 1st Place (Gold)</option>
-                <option value="2">🥈 2nd Place (Silver)</option>
-                <option value="3">🥉 3rd Place (Bronze)</option>
+                <option value="1">1st Place (Gold)</option>
+                <option value="2">2nd Place (Silver)</option>
+                <option value="3">3rd Place (Bronze)</option>
                 <option value="DECLARED">All Declared Winners</option>
               </select>
             </div>
           </div>
         </div>
 
-        <!-- View Controls & Count -->
-        <div class="flex items-center justify-between text-sm text-slate-300 font-medium px-1">
+        <div class="flex items-center justify-between text-base text-muted font-medium px-1">
           <span id="results-count-text">Showing 0 events</span>
-          <div class="flex items-center space-x-1.5 bg-[#0b101f] border border-slate-800 rounded-xl p-1">
-            <button id="view-card-btn" class="px-3 py-1.5 rounded-lg bg-slate-800 text-amber-400 font-bold flex items-center gap-1.5 transition-all text-sm">
+          <div class="flex items-center gap-1.5 bg-surface border rounded-xl p-1" style="border-color:#2c2c2c">
+            <button id="view-card-btn" class="px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 text-base min-h-10" style="background:#222;color:#ccff00">
               <i class="fa-solid fa-grip"></i>
               <span class="hidden sm:inline">Cards</span>
             </button>
-            <button id="view-table-btn" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white font-bold flex items-center gap-1.5 transition-all text-sm">
+            <button id="view-table-btn" class="px-3 py-1.5 rounded-lg text-muted hover:text-fg font-bold flex items-center gap-1.5 text-base min-h-10">
               <i class="fa-solid fa-list"></i>
               <span class="hidden sm:inline">Table</span>
             </button>
           </div>
         </div>
 
-        <!-- Event Cards Container -->
-        <div id="events-container-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-          <!-- Injected dynamically -->
-        </div>
+        <div id="events-container-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 
-        <!-- Event Table Container -->
-        <div id="events-container-table" class="hidden bg-[#0b101f]/90 border border-slate-800 rounded-2xl overflow-x-auto shadow-xl">
-          <table class="w-full text-left text-sm">
-            <thead class="bg-[#050811] text-slate-200 uppercase font-mono tracking-wider text-xs sm:text-sm font-bold border-b border-slate-800">
+        <div id="events-container-table" class="hidden bg-surface border rounded-2xl overflow-x-auto" style="border-color:#2c2c2c">
+          <table class="w-full text-left text-base">
+            <thead class="bg-bg text-fg uppercase font-display tracking-wider text-sm font-bold border-b" style="border-color:#2c2c2c">
               <tr>
                 <th class="py-3.5 px-4">Event ID</th>
-                <th class="py-3.5 px-4">Event Name</th>
-                <th class="py-3.5 px-4">Category & Gender</th>
+                <th class="py-3.5 px-4">Event</th>
+                <th class="py-3.5 px-4">Division</th>
                 <th class="py-3.5 px-4">Athlete</th>
-                <th class="py-3.5 px-4">Chest No</th>
+                <th class="py-3.5 px-4">Chest</th>
                 <th class="py-3.5 px-4">House</th>
                 <th class="py-3.5 px-4 text-center">Position</th>
                 <th class="py-3.5 px-4 text-right">Points</th>
               </tr>
             </thead>
-            <tbody id="events-table-body" class="divide-y divide-slate-800/70 font-medium">
-              <!-- Injected dynamically -->
-            </tbody>
+            <tbody id="events-table-body" class="divide-y font-medium" style="border-color:#2c2c2c"></tbody>
           </table>
         </div>
       </section>
 
-      <!-- SECTION 2: CATEGORY & GENDER MATRIX -->
       <section id="matrix-tab-content" class="hidden space-y-6">
-        <div class="bg-[#0b101f]/90 border border-slate-800 rounded-2xl p-5 sm:p-6 backdrop-blur-md shadow-xl">
+        <div class="bg-surface border rounded-2xl p-5 sm:p-6" style="border-color:#2c2c2c">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div>
-              <h3 class="font-display font-black text-xl sm:text-2xl text-white">Category & Division Points Matrix</h3>
-              <p class="text-sm text-slate-300 font-medium mt-0.5">Detailed points breakdown across age categories and gender divisions</p>
+              <h3 class="font-display font-black text-xl sm:text-2xl text-fg">Category & Division Points Matrix</h3>
+              <p class="text-base text-muted font-medium mt-0.5">Breakdown across age categories and gender divisions</p>
             </div>
-            
-            <!-- Matrix Gender Filter -->
-            <div class="inline-flex rounded-xl bg-[#060911] p-1 border border-slate-800 text-sm font-bold">
-              <button id="matrix-gender-all" class="px-3.5 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-black transition-all">All</button>
-              <button id="matrix-gender-boys" class="px-3.5 py-1.5 rounded-lg text-slate-300 hover:text-white transition-all font-semibold">Boys</button>
-              <button id="matrix-gender-girls" class="px-3.5 py-1.5 rounded-lg text-slate-300 hover:text-white transition-all font-semibold">Girls</button>
+            <div class="inline-flex rounded-xl bg-bg p-1 border text-base font-bold" style="border-color:#2c2c2c">
+              <button id="matrix-gender-all" class="px-3.5 py-1.5 rounded-lg font-black min-h-10" style="background:#ccff00;color:#111">All</button>
+              <button id="matrix-gender-boys" class="px-3.5 py-1.5 rounded-lg text-muted hover:text-fg min-h-10">Boys</button>
+              <button id="matrix-gender-girls" class="px-3.5 py-1.5 rounded-lg text-muted hover:text-fg min-h-10">Girls</button>
             </div>
           </div>
-
-          <!-- Responsive Matrix Table -->
-          <div class="overflow-x-auto rounded-xl border border-slate-800">
-            <table class="w-full text-left text-sm">
-              <thead class="bg-[#050811] text-slate-200 font-mono text-xs sm:text-sm uppercase tracking-wider font-bold border-b border-slate-800">
+          <div class="overflow-x-auto rounded-xl border" style="border-color:#2c2c2c">
+            <table class="w-full text-left text-base">
+              <thead class="bg-bg text-fg font-mono text-sm uppercase tracking-wider font-bold border-b" style="border-color:#2c2c2c">
                 <tr>
                   <th class="py-3.5 px-4">Category</th>
                   <th class="py-3.5 px-4">Gender</th>
-                  <th class="py-3.5 px-4 text-center bg-blue-950/40 text-blue-300 border-x border-slate-800/80">BLUE</th>
-                  <th class="py-3.5 px-4 text-center bg-green-950/40 text-green-300 border-r border-slate-800/80">GREEN</th>
-                  <th class="py-3.5 px-4 text-center bg-red-950/40 text-red-300 border-r border-slate-800/80">RED</th>
-                  <th class="py-3.5 px-4 text-center bg-amber-950/40 text-yellow-300 border-r border-slate-800/80">YELLOW</th>
-                  <th class="py-3.5 px-4 text-center font-bold text-white">Total</th>
-                  <th class="py-3.5 px-4 text-center">Leading House</th>
+                  <th class="py-3.5 px-4 text-center text-blue-400" style="background:rgba(59,130,246,0.1)">BLUE</th>
+                  <th class="py-3.5 px-4 text-center text-green-400" style="background:rgba(34,197,94,0.1)">GREEN</th>
+                  <th class="py-3.5 px-4 text-center text-red-400" style="background:rgba(239,68,68,0.1)">RED</th>
+                  <th class="py-3.5 px-4 text-center text-yellow-400" style="background:rgba(234,179,8,0.1)">YELLOW</th>
+                  <th class="py-3.5 px-4 text-center">Total</th>
+                  <th class="py-3.5 px-4 text-center">Leading</th>
                 </tr>
               </thead>
-              <tbody id="matrix-table-body" class="divide-y divide-slate-800/70 font-medium">
-                <!-- Injected dynamically -->
-              </tbody>
+              <tbody id="matrix-table-body" class="divide-y font-medium" style="border-color:#2c2c2c"></tbody>
             </table>
           </div>
         </div>
       </section>
 
-      <!-- SECTION 3: SOURCE & DASHBOARD LINK -->
       <section id="dashboard-tab-content" class="hidden space-y-6">
-        <div class="bg-[#0b101f]/90 border border-slate-800 rounded-2xl p-6 sm:p-8 backdrop-blur-md shadow-xl text-center max-w-2xl mx-auto space-y-5">
-          <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto text-3xl shadow-lg">
+        <div class="bg-surface border rounded-2xl p-6 sm:p-8 text-center max-w-2xl mx-auto space-y-5" style="border-color:#2c2c2c">
+          <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto text-3xl" style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#22c55e">
             <i class="fa-solid fa-file-excel"></i>
           </div>
-          <h3 class="font-display font-black text-2xl text-white">
-            Connected Google Spreadsheet
-          </h3>
-          <p class="text-sm sm:text-base text-slate-300 leading-relaxed font-medium">
-            Data is stored and managed live in Google Sheets. As scorers input positions, athlete names, and chest numbers on the ground, this live scoreboard refreshes automatically every 15 seconds.
+          <h3 class="font-display font-black text-2xl text-fg">Connected Google Spreadsheet</h3>
+          <p class="text-base text-muted leading-relaxed font-medium">
+            Scores flow live from Google Sheets. As scorers enter positions and chest numbers, this board refreshes every 15 seconds.
           </p>
-          
-          <div class="p-4 rounded-xl bg-[#060911] border border-slate-800 text-left space-y-2.5 text-sm font-mono text-slate-300">
-            <div class="flex justify-between">
-              <span>Spreadsheet:</span>
-              <span class="text-white font-semibold">Hidayathon 2.O Results</span>
-            </div>
-            <div class="flex justify-between">
-              <span>Scoreboard Tab:</span>
-              <span class="text-blue-400 font-semibold">Scoreboard (gid=0)</span>
-            </div>
-            <div class="flex justify-between">
-              <span>Event Results Tab:</span>
-              <span class="text-amber-400 font-semibold">Event_Results (gid=427537611)</span>
-            </div>
-            <div class="flex justify-between">
-              <span>Dashboard Tab:</span>
-              <span class="text-green-400 font-semibold">Podium Dashboard (gid=433488836)</span>
-            </div>
-          </div>
-
-          <div class="pt-3">
-            <a 
-              href="https://docs.google.com/spreadsheets/d/1rRUeY6iOaWIT7OPGMbJG6JnrYv7nOwUPiB8tHmOTep8/edit?usp=sharing" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              class="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm sm:text-base shadow-lg shadow-emerald-600/30 transition-all hover:scale-105 active:scale-95"
-            >
-              <i class="fa-solid fa-arrow-up-right-from-square"></i>
-              <span>Open Official Google Sheet</span>
-            </a>
-          </div>
+          <a href="https://docs.google.com/spreadsheets/d/1rRUeY6iOaWIT7OPGMbJG6JnrYv7nOwUPiB8tHmOTep8/edit?usp=sharing"
+             target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl text-base font-bold min-h-11"
+             style="background:#16a34a;color:#fff">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            Open Official Google Sheet
+          </a>
         </div>
       </section>
-
     </main>
 
-    <!-- FOOTER -->
-    <footer class="mt-auto border-t border-slate-900 bg-[#04060e] py-6 text-center text-sm text-slate-400 font-medium">
+    <footer class="mt-auto border-t py-6 text-center text-base text-muted font-medium" style="border-color:#2c2c2c;background:#0a0a0a">
       <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div class="flex items-center gap-2">
-          <img src="logo.png" alt="Logo" class="w-6 h-6 object-contain inline-block rounded" onerror="this.onerror=null; this.src='logo.jpg';">
-          <strong class="text-slate-200">HIDAYATHON 2.O</strong> &bull; Annual Sports Meet 2026 - 27
+          <img src="logo.png" alt="" class="w-6 h-6 object-contain rounded" onerror="this.onerror=null;this.src='logo.jpg';" />
+          <strong class="text-fg">HIDAYATHON 2.O</strong> · Annual Sports Meet 2026–27
         </div>
-        <div class="flex items-center gap-2 text-xs sm:text-sm">
+        <div class="flex items-center gap-2">
           <span>Official Scoring System</span>
-          <span>&bull;</span>
-          <span id="last-updated-text" class="text-slate-300">Synced just now</span>
+          <span>·</span>
+          <span id="last-updated-text">Synced just now</span>
         </div>
       </div>
     </footer>
   </div>
 
-  <!-- STADIUM / FULLSCREEN OVERLAY (Hidden by default) -->
-  <div id="stadium-overlay" class="fixed inset-0 bg-[#060911] z-[100] hidden flex-col p-6 sm:p-10 overflow-y-auto">
-    <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
-      <div class="flex items-center space-x-4">
-        <!-- Event logo replacing trophy in stadium overlay -->
-        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden bg-slate-900 border-2 border-amber-400/60 shadow-xl flex items-center justify-center p-1 shrink-0">
-          <img 
-            src="logo.png" 
-            alt="Hidayathon 2.O Logo" 
-            class="w-full h-full object-contain rounded-xl"
-            onerror="this.onerror=null; this.src='logo.jpg';"
-          />
-        </div>
+  <!-- Stadium overlay -->
+  <div id="stadium-overlay" class="fixed inset-0 z-[100] hidden flex-col p-6 sm:p-10 overflow-y-auto" style="background:#0a0a0a">
+    <div class="flex items-center justify-between border-b pb-4 mb-6" style="border-color:#2c2c2c">
+      <div class="flex items-center gap-4">
+        <img src="logo.png" alt="" class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl border-2 object-contain" style="border-color:rgba(204,255,0,0.6)" onerror="this.onerror=null;this.src='logo.jpg';" />
         <div>
-          <h1 class="font-display font-black text-2xl sm:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-200">
-            HIDAYATHON 2.O &bull; LIVE STADIUM ARENA
-          </h1>
-          <p class="text-slate-300 text-sm sm:text-base font-semibold">Official 3D House Standings & Championship Points Graph</p>
+          <h1 class="font-display font-black text-2xl sm:text-4xl text-fg">HIDAYATHON 2.O · LIVE STADIUM</h1>
+          <p class="text-muted text-base font-semibold">Official 3D House Standings</p>
         </div>
       </div>
-      <div class="flex items-center space-x-4">
-        <span class="px-4 py-1.5 rounded-full bg-red-600 text-white font-bold text-sm flex items-center gap-2 animate-pulse shadow-md">
-          <span class="w-2.5 h-2.5 rounded-full bg-white animate-ping"></span>
-          LIVE BROADCAST
-        </span>
-        <button id="close-stadium-btn" class="p-3 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-xl text-lg font-bold transition-all shadow">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
+      <button id="close-stadium-btn" class="p-3 bg-surface text-fg rounded-xl text-lg min-h-12 min-w-12" style="border:1px solid #2c2c2c">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
     </div>
-
-    <!-- Stadium Big 3D Cubes & Standings -->
     <div class="flex-1 flex flex-col justify-center">
-      <div id="stadium-podium-container" class="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto w-full mb-8 items-end">
-        <!-- Rendered dynamically with 3D cubes for all 4 houses -->
-      </div>
+      <div id="stadium-podium-container" class="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto w-full items-end"></div>
     </div>
   </div>
 
-  <!-- SHARE MODAL -->
-  <div id="share-modal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-[#0b101f] border border-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl space-y-4">
+  <!-- Share modal -->
+  <div id="share-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4" style="background:rgba(10,10,10,0.8);backdrop-filter:blur(4px)">
+    <div class="bg-surface border rounded-2xl p-6 max-w-md w-full space-y-4" style="border-color:#2c2c2c">
       <div class="flex items-center justify-between">
-        <h3 class="font-display font-bold text-lg text-white">Share Live Results</h3>
-        <button id="close-share-modal" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+        <h3 class="font-display font-bold text-lg text-fg">Share Live Results</h3>
+        <button id="close-share-modal" class="text-muted hover:text-fg"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
-      <p class="text-sm text-slate-300 font-medium">
-        Share the live results page with athletes, parents, teachers, and house supporters:
-      </p>
+      <p class="text-base text-muted font-medium">Share the live standings with athletes, parents, and houses.</p>
       <div class="flex gap-2">
-        <input id="share-url-input" type="text" readonly class="flex-1 bg-[#060911] border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 font-mono" />
-        <button id="copy-share-url-btn" class="px-3.5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-lg text-sm transition-all flex items-center gap-1.5 shadow">
+        <input id="share-url-input" type="text" readonly class="flex-1 bg-bg border rounded-lg px-3 py-2 text-sm text-fg font-mono" style="border-color:#2c2c2c" />
+        <button id="copy-share-url-btn" class="px-3.5 py-2 rounded-lg text-sm font-bold flex items-center gap-1.5 min-h-11" style="background:#ccff00;color:#111">
           <i class="fa-solid fa-copy"></i>
           <span>Copy</span>
         </button>
       </div>
-      <div class="pt-2 flex gap-3">
-        <a id="whatsapp-share-btn" target="_blank" class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg transition-all">
-          <i class="fa-brands fa-whatsapp text-lg"></i>
-          <span>Share on WhatsApp</span>
-        </a>
-      </div>
+      <a id="whatsapp-share-btn" target="_blank" class="flex-1 py-3 rounded-xl text-base font-bold flex items-center justify-center gap-2 min-h-11" style="background:#16a34a;color:#fff">
+        <i class="fa-brands fa-whatsapp text-lg"></i>
+        Share on WhatsApp
+      </a>
     </div>
   </div>
 
-  <!-- Application Logic -->
   <script src="app.js"></script>
 </body>
 </html>
