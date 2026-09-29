@@ -44,22 +44,22 @@
 <body class="bg-bg text-fg min-h-screen antialiased">
   <div class="accent-bar"></div>
 
-  <div class="relative z-10 flex flex-col min-h-screen">
+  <div class="page-wrap relative z-10 flex flex-col min-h-screen">
     <header class="sticky top-0 z-50 border-b border-border bg-bg/95 backdrop-blur-md" style="border-color:#2c2c2c">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
-        <div class="flex items-center gap-3.5">
-          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden border-2 border-primary/60 bg-surface p-0.5 shrink-0" style="border-color:rgba(204,255,0,0.6)">
-            <img src="logo.png" alt="Hidayathon 2.O Logo" class="w-full h-full object-contain" onerror="this.onerror=null;this.src='logo.jpg';" />
+      <div class="header-inner max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+        <div class="brand-row flex items-center gap-3.5">
+          <div class="site-logo">
+            <img id="event-logo-header" src="logo.png" width="48" height="48" alt="Hidayathon 2.O Logo" onerror="this.onerror=null;this.src='logo.jpg';" />
           </div>
-          <div>
+          <div class="brand-text">
             <div class="flex items-center gap-2.5 flex-wrap">
-              <span class="font-display font-black text-xl sm:text-2xl lg:text-3xl tracking-wider text-fg">HIDAYATHON 2.O</span>
-              <span class="px-2.5 py-1 rounded-full text-sm font-black tracking-wider uppercase bg-red-500/20 text-red-400 border border-red-500/40 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+              <span class="brand-title font-display font-black text-xl sm:text-2xl lg:text-3xl tracking-wider text-fg">HIDAYATHON 2.O</span>
+              <span class="live-pill">
+                <span style="width:8px;height:8px;border-radius:999px;background:#ef4444;display:inline-block"></span>
                 LIVE
               </span>
             </div>
-            <p class="text-base text-muted font-medium mt-0.5">Annual Sports Meet 2026–27 · Official House Standings</p>
+            <p style="color:#8d8d8d;font-size:1rem;margin:0.125rem 0 0;font-weight:500">Annual Sports Meet 2026–27 · Official House Standings</p>
           </div>
         </div>
 
@@ -112,8 +112,8 @@
           </p>
         </div>
 
-        <div id="podium-container" class="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 items-end min-h-[380px] pb-6">
-          <div class="col-span-2 lg:col-span-4 flex flex-col items-center justify-center p-8 text-muted">
+        <div id="podium-container" class="podium-grid grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 items-end min-h-[380px] pb-6">
+          <div class="col-span-2 lg:col-span-4 flex flex-col items-center justify-center p-8 text-muted" style="grid-column:1/-1">
             <i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3" style="color:#ccff00"></i>
             <span class="text-base font-semibold">Loading 3D house standings...</span>
           </div>
@@ -297,7 +297,7 @@
     <footer class="mt-auto border-t py-6 text-center text-base text-muted font-medium" style="border-color:#2c2c2c;background:#0a0a0a">
       <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div class="flex items-center gap-2">
-          <img src="logo.png" alt="" class="w-6 h-6 object-contain rounded" onerror="this.onerror=null;this.src='logo.jpg';" />
+          <img src="logo.png" width="24" height="24" alt="" style="width:24px;height:24px;object-fit:contain;border-radius:4px" onerror="this.onerror=null;this.src='logo.jpg';" />
           <strong class="text-fg">HIDAYATHON 2.O</strong> · Annual Sports Meet 2026–27
         </div>
         <div class="flex items-center gap-2">
@@ -313,7 +313,9 @@
   <div id="stadium-overlay" class="fixed inset-0 z-[100] hidden flex-col p-6 sm:p-10 overflow-y-auto" style="background:#0a0a0a">
     <div class="flex items-center justify-between border-b pb-4 mb-6" style="border-color:#2c2c2c">
       <div class="flex items-center gap-4">
-        <img src="logo.png" alt="" class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl border-2 object-contain" style="border-color:rgba(204,255,0,0.6)" onerror="this.onerror=null;this.src='logo.jpg';" />
+        <div class="stadium-logo" style="border:2px solid rgba(204,255,0,0.6);border-radius:1rem;overflow:hidden;background:#161616;padding:2px">
+          <img src="logo.png" width="56" height="56" alt="" onerror="this.onerror=null;this.src='logo.jpg';" />
+        </div>
         <div>
           <h1 class="font-display font-black text-2xl sm:text-4xl text-fg">HIDAYATHON 2.O · LIVE STADIUM</h1>
           <p class="text-muted text-base font-semibold">Official 3D House Standings</p>
